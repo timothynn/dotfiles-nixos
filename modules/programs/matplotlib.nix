@@ -1,0 +1,3 @@
+{
+  programs.matplotlib.enable = true;
+}

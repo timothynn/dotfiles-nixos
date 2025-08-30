@@ -1,0 +1,50 @@
+/* @import "./mocha.css"; */
+
+* {
+  font-family:FantasqueSansM Nerd Font, sans-serif;
+  font-size: 14px;
+  min-height: 0;
+  color: #d9e0ee;
+  background: transparent;
+
+}
+
+window#waybar {
+  background-color: #1e1e2e;
+  border-radius: 12px;
+  color: #cdd6f4;
+  padding: 0px 10px;
+}
+
+#workspaces button {
+  background: transparent;
+  border: none;
+  padding: 0 6px;
+  margin: 2px;
+  color: #6c7086;
+}
+
+#workspaces button.active {
+  color: #89b4fa;
+}
+
+#workspaces button.focused {
+      background: @lavender;
+  color: #89b4fa;
+}
+
+#clock, #cpu, #memory, #battery, #network, #pulseaudio, #tray, #backlight, #power{
+  padding: 0 10px;
+  margin: 5px;
+  border-radius: 6px;
+  background-color: #313244;
+}
+
+#battery.charging {
+  color: #a6e3a1;
+}
+
+#network.disconnected {
+  color: #f38ba8;
+}
+

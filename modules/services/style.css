@@ -1,0 +1,35 @@
+@import url("https://catppuccin.github.io/swaync/catppuccin-mocha.css");
+
+* {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 14px;
+}
+
+#notification-center {
+  background: rgba(30, 30, 46, 0.9);
+  border-radius: 16px;
+  border: 1px solid #89b4fa;
+  padding: 8px;
+}
+
+.notification {
+  border-radius: 12px;
+  margin: 6px 0;
+  padding: 8px;
+  background: rgba(49, 50, 68, 0.8);
+}
+
+.notification:hover {
+  background: rgba(69, 71, 90, 0.9);
+}
+
+#control-center {
+  border-radius: 16px;
+  background: rgba(24, 24, 37, 0.95);
+  padding: 12px;
+}
+
+.module {
+  margin: 4px;
+}
+

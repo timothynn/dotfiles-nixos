@@ -1,0 +1,10 @@
+# Obsidian-Green color scheme
+base      = #1b1b1b   # main background
+surface   = #242424   # slightly lighter panels
+overlay   = #2e2e2e   # popups/menus
+text      = #e0e0e0   # normal text
+subtext   = #a0a0a0   # muted text
+accent    = #00a86b   # emerald green highlight
+warning   = #ffcc00   # yellow warning
+error     = #ff5555   # red error
+
