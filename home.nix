@@ -62,9 +62,7 @@
 	keepassxc
 	google-chrome
     cargo
-    xfce.thunar
-    xfce.thunar-volman
-    xfce.tumbler
+    
         libsForQt5.qtstyleplugin-kvantum
   ];
 
@@ -115,5 +113,9 @@ home.sessionVariables = {
   };
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  programs = {
+    home-manager.enable = true;
+    lazydocker.enable = true;
+
+  };
 }
