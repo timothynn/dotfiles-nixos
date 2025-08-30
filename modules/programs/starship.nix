@@ -4,55 +4,28 @@
   programs.starship = {
     enable = true;
     settings = {
-      add_newline = true;
+      add_newline = false;
+      format = "$directory$git_branch$git_status$python$rust$nodejs$line_break$character";
+
+      # Theme pulls
       palette = "obsidian_green";
 
       palettes.obsidian_green = {
-        bg = "#1b1b1b";
-        fg = "#d1d5d4";
-        accent = "#00ff66";
-        dim = "#2b2b2b";
-      };
-
-      prompt_order = [
-        "username"
-        "directory"
-        "git_branch"
-        "git_status"
-        "nodejs"
-        "rust"
-        "python"
-        "cmd_duration"
-        "line_break"
-        "jobs"
-        "status"
-        "character"
-      ];
-
-      username = {
-        style_user = "fg:accent";
-        style_root = "bold fg:accent";
-        format = "[$user]($style) ";
-      };
-
-      directory = {
-        style = "fg:accent";
-        format = "[$path]($style) ";
-      };
-
-      git_branch = {
-        style = "fg:accent";
-        format = "[$branch]($style) ";
-      };
-
-      git_status = {
-        style = "fg:accent";
+        base = config.myTheme.base;
+        text = config.myTheme.text;
+        accent = config.myTheme.accent;
+        error = config.myTheme.error;
+        success = config.myTheme.success;
       };
 
       character = {
-        success_symbol = "[❯](fg:accent)";
-        error_symbol = "[❯](bold red)";
+        success_symbol = "[❯](accent)";
+        error_symbol = "[❯](error)";
       };
+
+      directory.style = "accent";
+      git_branch.style = "accent";
+      git_status.style = "warning";
     };
   };
 }

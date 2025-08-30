@@ -69,11 +69,13 @@
   fonts.fontconfig.enable = true;
 
 home.sessionVariables = {
-  GTK_FONT_NAME = "FantasqueSansM Nerd Font 11";
-  QT_FONT_NAME = "FantasqueSansM Nerd Font 11";
+  GTK_FONT_NAME = "JetbrainsMono Nerd Font 11";
+  QT_FONT_NAME = "JetbrainsMono Nerd Font 11";
   GTK_THEME = "Obsidian-Green";
   QT_STYLE_OVERRIDE = "kvantum";
   QT_QPA_PLATFORMTHEME = "kvantum";
+
+
 };
 
 

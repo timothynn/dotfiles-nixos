@@ -1,62 +1,59 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
+let
+  theme = config.myTheme;
+in
 {
-  home.packages = [ pkgs.hyprlock ];
+  programs.hyprlock = {
+    enable = true;
 
-  xdg.configFile."hypr/hyprlock.conf".text = ''
-    # ===========================
-    # Minimalist Hyprlock Config
-    # ===========================
+    settings = {
+      general = {
+        # Background color + blur
+        background_color = theme.base;
+        blur_size = 8;
+        blur_passes = 3;
+        noise = 0.02;
+        contrast = 1.05;
+        brightness = 0.95;
+        vibrancy = 0.15;
+      };
 
-    general {
-      disable_loading_bar = true
-      grace = 0
-      no_fade_in = false
-    }
+      input-field = {
+        monitor = "eDP-1"; # change if you have external monitors
+        size = "300,50";
+        position = "0, -150";
+        rounding = 12;
+        outer_color = theme.accent;
+        inner_color = theme.base;
+        font_color = theme.text;
+        placeholder_text = "Password...";
+        fade_on_empty = true;
+      };
 
-    background {
-      monitor = eDP-1
-      path = ""
-      color = rgba(30, 30, 46, 0.6)   # Catppuccin Mocha base
-      blur_passes = 4
-      blur_size = 12
-      brightness = 0.8
-    }
+      label = [
+        {
+          text = "$TIME";
+          font_size = 60;
+          color = theme.accent;
+          position = "0, -300";
+          halign = "center";
+        }
+        {
+          text = "$DATE";
+          font_size = 20;
+          color = theme.text;
+          position = "0, -250";
+          halign = "center";
+        }
+      ];
 
-    input-field {
-      monitor = eDP-1
-      size = 300, 40
-      outline_thickness = 2
-      dots_size = 0.2
-      dots_spacing = 0.3
-      dots_center = true
-      outer_color = rgba(166, 227, 161, 1.0)  # Catppuccin Green
-      inner_color = rgba(49, 50, 68, 1.0)
-      font_color = rgba(205, 214, 244, 1.0)   # Catppuccin Text
-      fade_on_empty = false
-      placeholder_text = "  Enter password"
-      hide_input = false
-    }
-
-    label {
-      monitor = eDP-1
-      text = cmd[update:1000] date "+%H:%M"
-      font_size = 64
-      color = rgba(205, 214, 244, 1.0)
-      position = 0, -100
-      halign = center
-      valign = center
-    }
-
-    label {
-      monitor = eDP-1
-      text = "Timothy"
-      font_size = 18
-      color = rgba(180, 190, 254, 1.0)   # Lavender accent
-      position = 0, -160
-      halign = center
-      valign = center
-    }
-  '';
+      indicator = {
+        size = 20;
+        color = theme.accent;
+        border_size = 3;
+      };
+    };
+  };
 }
 

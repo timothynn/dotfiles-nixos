@@ -16,39 +16,35 @@
       hide_window_decorations = "yes";
 
       # theme (Obsidian-Green)
-      background = "#1b1b1b";
-      foreground = "#d1d5d4";
+      background = config.myTheme.base;
+      foreground = config.myTheme.text;
+      #cursor = "#00ff66";
+      #cursor_text_color = "#1b1b1b";
 
-      cursor = "#00ff66";
-      cursor_text_color = "#1b1b1b";
+      #selection_background = "#00ff66";
+      #selection_foreground = "#1b1b1b";
 
-      selection_background = "#00ff66";
-      selection_foreground = "#1b1b1b";
+      
 
-      color0  = "#1b1b1b"; # black
-      color8  = "#2b2b2b"; # bright black
+      # Standard ANSI colors
+      color0 = config.myTheme.surface;
+      color1 = config.myTheme.error;
+      color2 = config.myTheme.accent;
+      color3 = config.myTheme.warning;
+      color4 = config.myTheme.info;
+      color5 = config.myTheme.accentAlt;
+      color6 = config.myTheme.success;
+      color7 = config.myTheme.subtext;
 
-      color1  = "#a54242"; # red
-      color9  = "#cc6666";
-
-      color2  = "#00ff66"; # green
-      color10 = "#66ff99";
-
-      color3  = "#b5bd68"; # yellow
-      color11 = "#f0c674";
-
-      color4  = "#81a2be"; # blue
-      color12 = "#99ccff";
-
-      color5  = "#b294bb"; # magenta
-      color13 = "#cc99ff";
-
-      color6  = "#8abeb7"; # cyan
-      color14 = "#99ffcc";
-
-      color7  = "#c5c8c6"; # white
-      color15 = "#ffffff"; # bright white
-    };
+      # Brights
+      color8  = config.myTheme.overlay;
+      color9  = config.myTheme.error;
+      color10 = config.myTheme.accentAlt;
+      color11 = config.myTheme.warning;
+      color12 = config.myTheme.info;
+      color13 = config.myTheme.accent;
+      color14 = config.myTheme.success;
+      color15 = config.myTheme.text;    };
   };
 }
 
