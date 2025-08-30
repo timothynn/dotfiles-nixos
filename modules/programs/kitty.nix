@@ -7,7 +7,7 @@
     # fonts & UI tweaks
     font = {
       name = "JetBrainsMono Nerd Font";
-      size = 12;
+      size = 10;
     };
 
     settings = {

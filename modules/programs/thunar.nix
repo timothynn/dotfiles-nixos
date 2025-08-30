@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
       home.packages = with pkgs.xfce; [
-      thunae
+      thunar
       thunar-archive-plugin
       thunar-volman
       tumbler
