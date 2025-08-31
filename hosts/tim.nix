@@ -35,7 +35,9 @@
   users = {
 	defaultUserShell = pkgs.zsh;
   };
-  users.users.root.ignoreShellProgramCheck = true;
+  users.users.root = {
+	shell = pkgs.zsh;
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tim = {
@@ -61,6 +63,7 @@
   libsecret
   gnome-secrets
   emacs
+  zsh
   ];
 
   virtualisation.docker = {
