@@ -61,7 +61,10 @@
 	keepassxc
 	google-chrome
     cargo
-    
+    wayclip
+    xclip
+    clipman
+    cliphist
         libsForQt5.qtstyleplugin-kvantum
   ];
 
