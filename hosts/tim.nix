@@ -32,6 +32,7 @@
     variant = "";
   };
 
+  programs.zsh.enable = true;
   users = {
 	defaultUserShell = pkgs.zsh;
   };
@@ -63,7 +64,6 @@
   libsecret
   gnome-secrets
   emacs
-  zsh
   ];
 
   virtualisation.docker = {
