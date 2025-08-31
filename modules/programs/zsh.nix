@@ -6,8 +6,12 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     autosuggestion.enable = true;
+    oh-my-zsh = {
+    	enable = true;
+    	plugins = ["sudo" "git" "docker" "aliases"];
+   };
 
-    initExtra = ''
+    initContent = ''
       # Obsidian-Green accents
       export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/highlighters
 

@@ -15,7 +15,7 @@ let
     success = "#00cc88";
   };
 in {
-  options.theme = lib.mkOption {
+  options.myTheme = lib.mkOption {
     type = lib.types.attrs;
     default = obsidianGreen;
     description = "Global Obsidian-Green theme palette";
@@ -43,8 +43,8 @@ in {
     # QT Style (using Kvantum)
     qt = {
       enable = true;
-      platformTheme = "kvantum";
-      style.name = "kvantum";
+      platformTheme.name = "kde";
+      style.name = "kde";
     };
 
     # Expose theme vars to environment
