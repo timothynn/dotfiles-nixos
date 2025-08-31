@@ -60,11 +60,13 @@
 	bibata-cursors
 	keepassxc
 	google-chrome
+	pavucontrol
     cargo
     wayclip
     xclip
     clipman
     cliphist
+    wl-clipboard
         libsForQt5.qtstyleplugin-kvantum
   ];
 
@@ -74,6 +76,8 @@ home.sessionVariables = {
   GTK_FONT_NAME = "JetbrainsMono Nerd Font 11";
   QT_FONT_NAME = "JetbrainsMono Nerd Font 11";
   GTK_THEME = "Obsidian-Green";
+  QT_STYLE_OVERRIDE = "kvantum";
+
 };
 
 
@@ -108,9 +112,6 @@ home.sessionVariables = {
   #
   #  /etc/profiles/per-user/tim/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    # EDITOR = "emacs";
-  };
 
   # Let Home Manager install and manage itself.
   programs = {

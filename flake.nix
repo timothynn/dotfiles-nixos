@@ -24,8 +24,8 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.tim = import ./home/tim.nix;
-	    home-manager.users.root = import .home/root.nix;
-                        }
+	    home-manager.users.root = import ./home/root.nix;
+          }
         ];
       };
 

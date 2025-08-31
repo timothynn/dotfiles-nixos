@@ -1,7 +1,10 @@
 { lib, pkgs, config,...}:
 {
-home-manager.users.root = {
-              home.stateVersion = "24.05";
+	home.username = "root";
+  	home.homeDirectory = "/root";
+        home.stateVersion = "25.05";
+
+	programs.zsh.enable = true;
               programs.starship = {
                 enable = true;
                 settings = {
@@ -15,9 +18,9 @@ home-manager.users.root = {
                     style_user = "white bold";
                     style_root = "red bold";
                     format = "[$user]($style) ";
+		    disabled = false;
                     show_always = true;
                   };
                 };
-              };
 };
 }

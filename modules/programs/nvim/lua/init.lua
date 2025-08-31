@@ -65,3 +65,6 @@ require("lualine").setup({
   }
 })
 
+-- init.lua
+vim.opt.clipboard = "unnamedplus"
+
