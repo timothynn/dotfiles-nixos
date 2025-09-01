@@ -19,5 +19,6 @@
 		./yazi.nix
 		./zsh.nix
     ./skim.nix
+    ./cava.nix
 	];
 }

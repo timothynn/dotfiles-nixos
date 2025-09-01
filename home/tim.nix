@@ -49,7 +49,6 @@
 	  unzip
 	  mpv
 	  lazygit
-	  cava
 	  kdePackages.dolphin
 	  qbittorrent
 	  zoxide
@@ -83,6 +82,7 @@
     termusic
     yt-dlp
     pcmanfm
+    notion-app
   ];
 
   fonts.fontconfig.enable = true;
