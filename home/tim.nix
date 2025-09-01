@@ -81,7 +81,10 @@
 	  bitwarden-cli
 	  rofi-rbw-wayland
 	  bws
-
+    termusic
+    yt-dlp
+    pcmanfm
+    obsidian
   ];
 
   fonts.fontconfig.enable = true;
