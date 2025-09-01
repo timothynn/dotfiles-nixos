@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    nixfmt
+    nixfmt-classic
     shellcheck
   ];
 	services.emacs.enable = true;

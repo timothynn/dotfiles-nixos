@@ -79,10 +79,20 @@
 	  bitwarden-cli
 	  rofi-rbw-wayland
 	  bws
+
     termusic
     yt-dlp
     pcmanfm
     notion-app-enhanced
+    mastodon
+    
+    #markdown
+    glow
+    mdcat
+    mdbook
+    emacsPackages.markdown-preview-mode
+
+    code-cursor
   ];
 
   fonts.fontconfig.enable = true;
@@ -93,7 +103,7 @@
     GTK_THEME = "Obsidian-Green";
     QT_STYLE_OVERRIDE = "kvantum";
     BROWSER = "firefox";
-    EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

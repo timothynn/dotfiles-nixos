@@ -13,6 +13,9 @@
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+# WIREGUARD VPN
+boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -65,6 +68,8 @@
   libsecret
   gnome-secrets
   emacs
+    wireguard
+    wireguard-tools
     (catppuccin-sddm.override {
     flavor = "mocha";
     font  = "JetbrainsMono Nerd Font";
@@ -156,5 +161,6 @@ security.polkit = {
 services.flatpak = {
 	enable = true;
 };
+
 
 }
