@@ -68,7 +68,6 @@
     wl-clipboard
         libsForQt5.qtstyleplugin-kvantum
 	code-cursor
-	notion-app
 	notion-app-enhanced
 	clap
 	rnm
