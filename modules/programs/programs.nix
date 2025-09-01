@@ -18,5 +18,6 @@
 		./zoxide.nix
 		./yazi.nix
 		./zsh.nix
+    ./skim.nix
 	];
 }
