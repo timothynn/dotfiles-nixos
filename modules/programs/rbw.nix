@@ -1,7 +1,7 @@
 { lib, config, pkgs, ...}:
 
 {
-	services.rbw = {
+	programs.rbw = {
 		enable = true;
 		settings = {
 			email = "timothynn08@gmail.com";
