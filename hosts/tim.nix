@@ -64,6 +64,7 @@
   libsecret
   gnome-secrets
   emacs
+    catppuccin-sddm
   ];
 
   virtualisation.docker = {
@@ -107,6 +108,7 @@ programs.dconf.enable = true;
 services.displayManager.sddm = {
 	enable = true;
 	wayland.enable = true;
+    theme = "catppuccin-mocha";
 };
 
 services.pipewire = {

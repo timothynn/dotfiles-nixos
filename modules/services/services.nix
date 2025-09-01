@@ -7,5 +7,6 @@
 		./notification.nix
 		./swaync.nix
 		./gnome-keyring.nix
+		./emacs.nix
 	];
 }

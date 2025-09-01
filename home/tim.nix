@@ -7,7 +7,7 @@
   home.homeDirectory = "/home/tim";
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnsupportedSystem = true;
-  	imports = [
+  imports = [
 		../modules/loader.nix
 	];
   # This value determines the Home Manager release that your configuration is
@@ -18,77 +18,77 @@
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
-  
+
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
   	spotify
-	ffmpeg
-	bat
-	bottom
-	gh
-	git
-	postman
-	discord
-	dbeaver-bin
-	vscode
-	fd
-	ripgrep
-	xh
-	choose
-	tokei
-	procs
-	tealdeer
-	gcc
-	unzip
-	mpv
-	lazygit
-	cava
-	kdePackages.dolphin
-	qbittorrent
-	zoxide
-	nerd-fonts.jetbrains-mono
-	nerd-fonts.fantasque-sans-mono
-	nerd-fonts.iosevka
-	nerd-fonts.fira-code
-	brightnessctl
-	playerctl
-	pyprland
-	fastfetch
-	openssl
-	bibata-cursors
-	keepassxc
-	pavucontrol
+	  ffmpeg
+	  bat
+	  bottom
+	  gh
+	  git
+	  postman
+	  discord
+	  dbeaver-bin
+	  vscode
+	  fd
+	  ripgrep
+	  xh
+	  choose
+	  tokei
+	  procs
+	  tealdeer
+	  gcc
+	  unzip
+	  mpv
+	  lazygit
+	  cava
+	  kdePackages.dolphin
+	  qbittorrent
+	  zoxide
+	  nerd-fonts.jetbrains-mono
+	  nerd-fonts.fantasque-sans-mono
+	  nerd-fonts.iosevka
+	  nerd-fonts.fira-code
+	  brightnessctl
+	  playerctl
+	  pyprland
+	  fastfetch
+	  openssl
+	  bibata-cursors
+	  keepassxc
+	  pavucontrol
     cargo
     wayclip
     xclip
     clipman
     cliphist
     wl-clipboard
-        libsForQt5.qtstyleplugin-kvantum
-	code-cursor
-	notion-app-enhanced
-	clap
-	rnm
-	# bitwarden
-	bitwarden-desktop
-	bitwarden-cli
-	rofi-rbw-wayland
-	bws
-	
+    libsForQt5.qtstyleplugin-kvantum
+	  code-cursor
+	  notion-app-enhanced
+	  clap
+	  rnm
+	  # bitwarden
+	  bitwarden-desktop
+	  bitwarden-cli
+	  rofi-rbw-wayland
+	  bws
+
   ];
 
   fonts.fontconfig.enable = true;
 
-home.sessionVariables = {
-  GTK_FONT_NAME = "JetbrainsMono Nerd Font 11";
-  QT_FONT_NAME = "JetbrainsMono Nerd Font 11";
-  GTK_THEME = "Obsidian-Green";
-  QT_STYLE_OVERRIDE = "kvantum";
-  BROWSER = "firefox";
-  EDITOR = "emacs";
-};
+  home.sessionVariables = {
+    GTK_FONT_NAME = "JetbrainsMono Nerd Font 11";
+    QT_FONT_NAME = "JetbrainsMono Nerd Font 11";
+    GTK_THEME = "Obsidian-Green";
+    QT_STYLE_OVERRIDE = "kvantum";
+    BROWSER = "firefox";
+    EDITOR = "emacs";
+  };
 
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

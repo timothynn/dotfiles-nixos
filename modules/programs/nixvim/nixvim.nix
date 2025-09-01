@@ -1,9 +1,8 @@
-{ config, pkgs, nixvim, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  programs.nixvim = {
-    enable = true;
-
-  };
+  home.packages  = with pkgs;[
+	neovim
+  ];
 }
 
