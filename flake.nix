@@ -26,7 +26,6 @@
           ./hosts/hardware-configuration.nix
           home-manager.nixosModules.home-manager
 	  nixvim.nixosModules.nixvim
-	  nixvim.homeModules.nixvim
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
