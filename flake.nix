@@ -27,12 +27,12 @@
           ./hosts/hardware-configuration.nix
           home-manager.nixosModules.home-manager
 	        nixvim.nixosModules.nixvim
-          catppuccin.nixosModules.catppuccin
+          # catppuccin.nixosModules.catppuccin
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.tim = import ./home/tim.nix;
-	          home-manager.users.root = import ./home/root.nix;
+            # home-manager.users.tim = import ./home/tim.nix;
+            # home-manager.users.root = import ./home/root.nix;
           }
         ];
       };
@@ -46,6 +46,15 @@
           catppuccin.homeModules.catppuccin
         ];
       };
+       homeConfigurations.root = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          ./home/root.nix
+	        nixvim.homeModules.nixvim
+          catppuccin.homeModules.catppuccin
+        ];
+      };
+
     };
 }
 
