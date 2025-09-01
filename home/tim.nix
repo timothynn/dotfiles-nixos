@@ -72,6 +72,12 @@
 	notion-app-enhanced
 	clap
 	rnm
+	# bitwarden
+	bitwarden-desktop
+	bitwarden-cli
+	rofi-rbw-wayland
+	bws
+	
   ];
 
   fonts.fontconfig.enable = true;
