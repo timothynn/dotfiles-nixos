@@ -26,7 +26,7 @@
           ./hosts/tim.nix
           ./hosts/hardware-configuration.nix
           home-manager.nixosModules.home-manager
-	  nixvim.nixosModules.nixvim
+	        nixvim.nixosModules.nixvim
           catppuccin.nixosModules.catppuccin
           {
             home-manager.useGlobalPkgs = true;
@@ -43,7 +43,7 @@
         modules = [
           ./home/tim.nix
 	  nixvim.homeModules.nixvim
-          catppuccin.homeModules.nixvim
+          catppuccin.homeModules.catppuccin
         ];
       };
     };
