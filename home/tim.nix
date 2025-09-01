@@ -82,7 +82,7 @@
     termusic
     yt-dlp
     pcmanfm
-    notion-app
+    notion-app-enhanced
   ];
 
   fonts.fontconfig.enable = true;
