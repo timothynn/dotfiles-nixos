@@ -73,7 +73,6 @@
     wl-clipboard
     libsForQt5.qtstyleplugin-kvantum
 	  code-cursor
-	  notion-app-enhanced
 	  clap
 	  rnm
 	  # bitwarden
@@ -84,7 +83,6 @@
     termusic
     yt-dlp
     pcmanfm
-    obsidian
   ];
 
   fonts.fontconfig.enable = true;
