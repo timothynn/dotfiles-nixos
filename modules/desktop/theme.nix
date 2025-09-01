@@ -99,6 +99,7 @@ in {
     * {
       background-color: ${obsidianGreen.base};
       color: ${obsidianGreen.text};
+      font: JetbrainsMono Nerd Font 11
     }
     button {
       background: ${obsidianGreen.accent};

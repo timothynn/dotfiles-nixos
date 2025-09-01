@@ -3,7 +3,6 @@
 {
   programs.neovim = {
     enable = true;
-    defaultEditor = true;
 
     # Enable Node + Python providers for plugins (treesitter, lsp, etc.)
     withNodeJs = true;

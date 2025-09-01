@@ -142,6 +142,9 @@ security.polkit = {
   		});
 	'';};
 
-
+# FLATPAK
+services.flatpak = {
+	enable = true;
+};
 
 }

@@ -6,7 +6,7 @@
   home.username = "tim";
   home.homeDirectory = "/home/tim";
   nixpkgs.config.allowUnfree = true;
-
+  nixpkgs.config.allowUnsupportedSystem = true;
   imports = [
 	../modules/loader.nix
 ];
@@ -59,7 +59,6 @@
 	openssl
 	bibata-cursors
 	keepassxc
-	google-chrome
 	pavucontrol
     cargo
     wayclip
@@ -68,6 +67,11 @@
     cliphist
     wl-clipboard
         libsForQt5.qtstyleplugin-kvantum
+	code-cursor
+	notion-app
+	notion-app-enhanced
+	clap
+	rnm
   ];
 
   fonts.fontconfig.enable = true;
@@ -77,7 +81,8 @@ home.sessionVariables = {
   QT_FONT_NAME = "JetbrainsMono Nerd Font 11";
   GTK_THEME = "Obsidian-Green";
   QT_STYLE_OVERRIDE = "kvantum";
-
+  BROWSER = "firefox";
+  EDITOR = "emacs";
 };
 
 
