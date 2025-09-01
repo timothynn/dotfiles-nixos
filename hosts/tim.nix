@@ -64,7 +64,13 @@
   libsecret
   gnome-secrets
   emacs
-    catppuccin-sddm
+    (catppuccin-sddm.override {
+    flavor = "mocha";
+    font  = "JetbrainsMono Nerd Font";
+    fontSize = "10";
+    # background = "${./wallpaper.png}";
+    loginBackground = true;
+  })
   ];
 
   virtualisation.docker = {
@@ -107,6 +113,7 @@ programs.hyprland = {
 programs.dconf.enable = true;
 services.displayManager.sddm = {
 	enable = true;
+    package = pkgs.kdePackages.sddm;
 	wayland.enable = true;
     theme = "catppuccin-mocha";
 };

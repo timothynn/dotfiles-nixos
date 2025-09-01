@@ -10,9 +10,10 @@
         # If using a stable channel you can use `url = "github:nix-community/nixvim/nixos-<version>"`
         inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, ... }:
+  outputs = { self, nixpkgs, home-manager, nixvim, catppuccin, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
@@ -26,6 +27,7 @@
           ./hosts/hardware-configuration.nix
           home-manager.nixosModules.home-manager
 	  nixvim.nixosModules.nixvim
+          catppuccin.nixosModules.catppuccin
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -41,6 +43,7 @@
         modules = [
           ./home/tim.nix
 	  nixvim.homeModules.nixvim
+          catppuccin.homeModules.nixvim
         ];
       };
     };
