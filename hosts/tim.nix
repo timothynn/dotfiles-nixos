@@ -15,24 +15,29 @@
 
 # WIREGUARD VPN
 networking = {
-    wireguard.enable = true;
+    wireguard.enable = false;
 
     # Define your WireGuard interface
-    wireguard.interfaces.wg0 = {
-      ips = [ "10.0.0.2/24" ]; # Your VPN private IP
-      listenPort = 51820;      # The port WireGuard listens on
-      privateKeyFile = "/etc/wireguard/privatekey"; # store securely
+    wireguard.interfaces = {
+      wg0 = {
+        ips = [ "10.0.0.1/24" ]; # Your VPN private IP
+        listenPort = 51820;      # The port WireGuard listens on
+        privateKeyFile = "/etc/wireguard/privatekey"; # store securely
 
-      peers = [
+        peers = [
         {
-          publicKey = "BLaJ09vmfBr8nBBmlqA0sDPTcz7U4M9rAf9iY38z2F4="; # replace
-          allowedIPs = [ "0.0.0.0/0" "::/0" ]; # send all traffic through VPN
-          endpoint = "102.209.18.239:51820"; # server domain/IP
-          persistentKeepalive = 25;
+          publicKey = "GGxmPfSRvNFFR+EopTkdT1XIgEuxThXLOecp0R4W/QE="; # replace
+          allowedIPs = [ "10.0.0.2/32" ]; # send all traffic through VPN
         }
       ];
     };
+    };
   };
+
+ networking.nat.enable = false;
+  networking.nat.externalInterface = "enp0s31f6";  # replace with your WAN interface
+  networking.nat.internalInterfaces = [ "wg0" ];
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -115,7 +120,7 @@ networking = {
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
-  networking.firewall.allowedUDPPorts = [ 51820 ];
+  # networking.firewall.allowedUDPPorts = [ 51820 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 

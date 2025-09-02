@@ -2,6 +2,7 @@
 
 {
 	imports = [
+    ./eza.nix
 		./fzf.nix
 		./git.nix
 		./hyprlock.nix
