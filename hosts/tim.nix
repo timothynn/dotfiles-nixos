@@ -14,8 +14,25 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
 # WIREGUARD VPN
-boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
+networking = {
+    wireguard.enable = true;
 
+    # Define your WireGuard interface
+    wireguard.interfaces.wg0 = {
+      ips = [ "10.0.0.2/24" ]; # Your VPN private IP
+      listenPort = 51820;      # The port WireGuard listens on
+      privateKeyFile = "/etc/wireguard/privatekey"; # store securely
+
+      peers = [
+        {
+          publicKey = "BLaJ09vmfBr8nBBmlqA0sDPTcz7U4M9rAf9iY38z2F4="; # replace
+          allowedIPs = [ "0.0.0.0/0" "::/0" ]; # send all traffic through VPN
+          endpoint = "102.209.18.239:51820"; # server domain/IP
+          persistentKeepalive = 25;
+        }
+      ];
+    };
+  };
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -68,7 +85,7 @@ boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
   libsecret
   gnome-secrets
   emacs
-    wireguard
+    wireguard-ui
     wireguard-tools
     (catppuccin-sddm.override {
     flavor = "mocha";
@@ -98,7 +115,7 @@ boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedUDPPorts = [ 51820 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
