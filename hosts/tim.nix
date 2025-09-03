@@ -101,6 +101,7 @@ networking = {
   })
   sops
   age
+  pgcli
   ];
 
   virtualisation.docker = {
@@ -191,11 +192,6 @@ services.flatpak = {
 services = {
 	postgresql = {enable = true;};
 	postgrest = {enable = true;};
-	pgadmin = {
-		enable = true;
-		initialEmail = "timothynn08@gmail.com";
-		initialPasswordFile = "/etc/pg-admin.txt";
-	};
 };
 
 
