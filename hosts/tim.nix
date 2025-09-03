@@ -99,6 +99,8 @@ networking = {
     # background = "${./wallpaper.png}";
     loginBackground = true;
   })
+  sops
+  age
   ];
 
   virtualisation.docker = {
@@ -178,11 +180,24 @@ security.polkit = {
     			if (subject.local) return "yes";
   		});
 	'';};
+sops.defaultSopsFile = ./secrets/pgadmin-pass.yaml;
 
+  sops.secrets.pgadmin-pass = { };
 # FLATPAK
 services.flatpak = {
 	enable = true;
 };
+
+services = {
+	postgresql = {enable = true;};
+	postgrest = {enable = true;};
+	pgadmin = {
+		enable = true;
+		initialEmail = "timothynn08@gmail.com";
+		initialPasswordFile = config.sops.secrets.pgadmin-pass.path;
+	};
+};
+
 
 
 }

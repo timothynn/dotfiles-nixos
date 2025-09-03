@@ -83,7 +83,6 @@
     termusic
     yt-dlp
     pcmanfm
-    notion-app-enhanced
     mastodon
     
     #markdown
@@ -93,7 +92,18 @@
     emacsPackages.markdown-preview-mode
 
     code-cursor
+    zoom-us
+    slack
     ];
+
+xdg.mimeApps = {
+  enable = true;
+  defaultApplications = {
+    "x-scheme-handler/slack" = [ "slack.desktop" ];
+    "x-scheme-handler/zoommtg" = [ "Zoom.desktop" ];
+  };
+};
+
 
   fonts.fontconfig.enable = true;
 
