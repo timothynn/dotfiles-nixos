@@ -93,7 +93,6 @@
     emacsPackages.markdown-preview-mode
 
     code-cursor
-    zoom
     ];
 
   fonts.fontconfig.enable = true;
