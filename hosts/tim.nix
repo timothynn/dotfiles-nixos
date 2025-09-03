@@ -69,7 +69,7 @@ networking = {
   users.users.tim = {
     isNormalUser = true;
     description = "tim";
-    extraGroups = [ "networkmanager" "wheel" "audio" "video" "storage" "docker"];
+    extraGroups = [ "networkmanager" "wheel" "audio" "video" "storage" "docker" "postgres"];
     packages = with pkgs; [];
     ignoreShellProgramCheck = true;
   };
@@ -194,7 +194,7 @@ services = {
 	pgadmin = {
 		enable = true;
 		initialEmail = "timothynn08@gmail.com";
-		initialPasswordFile = config.sops.secrets.pgadmin-pass.path;
+		initialPasswordFile = "/etc/pg-admin.txt";
 	};
 };
 
