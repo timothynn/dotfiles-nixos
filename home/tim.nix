@@ -94,6 +94,9 @@
     code-cursor
     zoom-us
     slack
+
+    vivaldi
+    vivaldi-ffmpeg-codecs
     ];
 
 xdg.mimeApps = {
