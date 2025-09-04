@@ -102,6 +102,7 @@ networking = {
   sops
   age
   pgcli
+  pgadmin4
   ];
 
   virtualisation.docker = {
@@ -134,12 +135,7 @@ networking = {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-programs.hyprland = {
-	enable = true;
-	portalPackage = pkgs.xdg-desktop-portal-hyprland;
-	withUWSM = true;
-	xwayland.enable = true;
-};
+
 
 programs.dconf.enable = true;
 services.displayManager.sddm = {
