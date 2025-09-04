@@ -2,6 +2,7 @@
 
 {
 	imports = [
+		./hyprland/hyprland.nix
     ./eza.nix
 		./fzf.nix
 		./git.nix
