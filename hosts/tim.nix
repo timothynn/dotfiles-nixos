@@ -99,10 +99,7 @@ networking = {
     # background = "${./wallpaper.png}";
     loginBackground = true;
   })
-  sops
-  age
   pgcli
-  pgadmin4
   ];
 
   virtualisation.docker = {
@@ -135,7 +132,13 @@ networking = {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-
+xdg.portal = {
+  enable = true;
+  extraPortals = [
+   pkgs.xdg-desktop-portal-hyprland
+  ];
+  config.common.default = [ "hyprland" ];
+};
 
 programs.dconf.enable = true;
 services.displayManager.sddm = {
@@ -177,9 +180,6 @@ security.polkit = {
     			if (subject.local) return "yes";
   		});
 	'';};
-sops.defaultSopsFile = ./secrets/pgadmin-pass.yaml;
-
-  sops.secrets.pgadmin-pass = { };
 # FLATPAK
 services.flatpak = {
 	enable = true;
@@ -189,7 +189,4 @@ services = {
 	postgresql = {enable = true;};
 	postgrest = {enable = true;};
 };
-
-
-
 }
