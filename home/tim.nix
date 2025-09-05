@@ -7,9 +7,7 @@
   home.homeDirectory = "/home/tim";
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnsupportedSystem = true;
-  imports = [
-		../modules/loader.nix
-	];
+  imports = [ ../modules/loader.nix ];
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -28,42 +26,42 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-  	spotify
-	  ffmpeg
-	  bat
-	  bottom
-	  gh
-	  git
-	  postman
-	  discord
-	  dbeaver-bin
-	  vscode
-	  fd
-	  ripgrep
-	  xh
-	  choose
-	  tokei
-	  procs
-	  tealdeer
-	  gcc
-	  unzip
-	  mpv
-	  lazygit
-	  kdePackages.dolphin
-	  qbittorrent
-	  zoxide
-	  nerd-fonts.jetbrains-mono
-	  nerd-fonts.fantasque-sans-mono
-	  nerd-fonts.iosevka
-	  nerd-fonts.fira-code
-	  brightnessctl
-	  playerctl
-	  pyprland
-	  fastfetch
-	  openssl
-	  bibata-cursors
-	  keepassxc
-	  pavucontrol
+    spotify
+    ffmpeg
+    bat
+    bottom
+    gh
+    git
+    postman
+    discord
+    dbeaver-bin
+    vscode
+    fd
+    ripgrep
+    xh
+    choose
+    tokei
+    procs
+    tealdeer
+    gcc
+    unzip
+    mpv
+    lazygit
+    kdePackages.dolphin
+    qbittorrent
+    zoxide
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fantasque-sans-mono
+    nerd-fonts.iosevka
+    nerd-fonts.fira-code
+    brightnessctl
+    playerctl
+    pyprland
+    fastfetch
+    openssl
+    bibata-cursors
+    keepassxc
+    pavucontrol
     cargo
     wayclip
     xclip
@@ -71,20 +69,20 @@
     cliphist
     wl-clipboard
     libsForQt5.qtstyleplugin-kvantum
-	  code-cursor
-	  clap
-	  rnm
-	  # bitwarden
-	  bitwarden-desktop
-	  bitwarden-cli
-	  rofi-rbw-wayland
-	  bws
+    code-cursor
+    clap
+    rnm
+    # bitwarden
+    bitwarden-desktop
+    bitwarden-cli
+    rofi-rbw-wayland
+    bws
 
     termusic
     yt-dlp
     pcmanfm
     mastodon
-    
+
     #markdown
     glow
     mdcat
@@ -97,16 +95,17 @@
 
     vivaldi
     vivaldi-ffmpeg-codecs
-    ];
 
-xdg.mimeApps = {
-  enable = true;
-  defaultApplications = {
-    "x-scheme-handler/slack" = [ "slack.desktop" ];
-    "x-scheme-handler/zoommtg" = [ "Zoom.desktop" ];
+    databricks-cli
+  ];
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "x-scheme-handler/slack" = [ "slack.desktop" ];
+      "x-scheme-handler/zoommtg" = [ "Zoom.desktop" ];
+    };
   };
-};
-
 
   fonts.fontconfig.enable = true;
 

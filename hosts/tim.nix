@@ -13,29 +13,28 @@
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-# WIREGUARD VPN
-networking = {
+  # WIREGUARD VPN
+  networking = {
     wireguard.enable = false;
 
     # Define your WireGuard interface
     wireguard.interfaces = {
       wg0 = {
         ips = [ "10.0.0.1/24" ]; # Your VPN private IP
-        listenPort = 51820;      # The port WireGuard listens on
+        listenPort = 51820; # The port WireGuard listens on
         privateKeyFile = "/etc/wireguard/privatekey"; # store securely
 
-        peers = [
-        {
+        peers = [{
           publicKey = "GGxmPfSRvNFFR+EopTkdT1XIgEuxThXLOecp0R4W/QE="; # replace
           allowedIPs = [ "10.0.0.2/32" ]; # send all traffic through VPN
-        }
-      ];
-    };
+        }];
+      };
     };
   };
 
- networking.nat.enable = false;
-  networking.nat.externalInterface = "enp0s31f6";  # replace with your WAN interface
+  networking.nat.enable = false;
+  networking.nat.externalInterface =
+    "enp0s31f6"; # replace with your WAN interface
   networking.nat.internalInterfaces = [ "wg0" ];
 
   # Configure network proxy if necessary
@@ -58,19 +57,23 @@ networking = {
   };
 
   programs.zsh.enable = true;
-  users = {
-	defaultUserShell = pkgs.zsh;
-  };
-  users.users.root = {
-	shell = pkgs.zsh;
-  };
+  users = { defaultUserShell = pkgs.zsh; };
+  users.users.root = { shell = pkgs.zsh; };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tim = {
     isNormalUser = true;
     description = "tim";
-    extraGroups = [ "networkmanager" "wheel" "audio" "video" "storage" "docker" "postgres"];
-    packages = with pkgs; [];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "audio"
+      "video"
+      "storage"
+      "docker"
+      "postgres"
+    ];
+    packages = with pkgs; [ ];
     ignoreShellProgramCheck = true;
   };
 
@@ -81,43 +84,43 @@ networking = {
   # $ nix search wget
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-  firefox
-  home-manager
-  docker-compose
-  libsForQt5.qt5.qtgraphicaleffects
-  libsecret
-  gnome-secrets
-  emacs
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
+    firefox
+    home-manager
+    docker-compose
+    libsForQt5.qt5.qtgraphicaleffects
+    libsecret
+    gnome-secrets
+    emacs
     wireguard-ui
     wireguard-tools
     (catppuccin-sddm.override {
-    flavor = "mocha";
-    font  = "JetbrainsMono Nerd Font";
-    fontSize = "10";
-    # background = "${./wallpaper.png}";
-    loginBackground = true;
-  })
-  pgcli
+      flavor = "mocha";
+      font = "JetbrainsMono Nerd Font";
+      fontSize = "10";
+      # background = "${./wallpaper.png}";
+      loginBackground = true;
+    })
+    pgcli
   ];
 
   virtualisation.docker = {
-	enable = true;
-	rootless.enable = true;
+    enable = true;
+    rootless.enable = true;
   };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
   programs.gnupg.agent = {
-   enable = true;
-     enableSSHSupport = true;
-   };
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-   services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -132,61 +135,63 @@ networking = {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-xdg.portal = {
-  enable = true;
-  extraPortals = [
-   pkgs.xdg-desktop-portal-hyprland
-  ];
-  config.common.default = [ "hyprland" ];
-};
 
-programs.dconf.enable = true;
-services.displayManager.sddm = {
-	enable = true;
+  programs.uwsm = {
+    enable = true;
+    waylandCompositors = {
+      hyprland = {
+        prettyName = "Hyprland";
+        comment = "Hyprland compositor managed by UWSM";
+        binPath = "${pkgs.hyprland}/bin/Hyprland";
+        # binPath = "/home/tim/.nix-profile/bin/Hyprland";
+      };
+    };
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    config.common.default = [ "hyprland" ];
+  };
+
+  programs.dconf.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
     package = pkgs.kdePackages.sddm;
-	wayland.enable = true;
+    wayland.enable = true;
     theme = "catppuccin-mocha";
-};
+  };
 
-services.pipewire = {
-	enable = true;
-	audio.enable = true;
-	pulse.enable = true;
-	alsa.enable = true;
-};
+  # Make the UWSM Hyprland session the default login session
+  services.displayManager.defaultSession = "hyprland-uwsm";
 
-services.udisks2.enable = true;
+  services.pipewire = {
+    enable = true;
+    audio.enable = true;
+    pulse.enable = true;
+    alsa.enable = true;
+  };
 
+  services.udisks2.enable = true;
 
-services.gvfs.enable = true;
+  services.gvfs.enable = true;
 
-# SECURITY
-services.gnome.gnome-keyring.enable = true;
-programs.uwsm = {
-	enable = true;
-	waylandCompositors = {
-	hyprland = {
-  prettyName = "Hyprland";
-  comment = "Hyprland compositor managed by UWSM";
-  binPath = "/run/current-system/sw/bin/Hyprland";
-};
-};
-};
-security.polkit = {
-	enable = true;
-	extraConfig = ''  
-  		/* Allow any local user to do anything (dangerous!). */
-  		polkit.addRule(function(action, subject) {
-    			if (subject.local) return "yes";
-  		});
-	'';};
-# FLATPAK
-services.flatpak = {
-	enable = true;
-};
+  # SECURITY
+  services.gnome.gnome-keyring.enable = true;
+  security.polkit = {
+    enable = true;
+    extraConfig = ''
+        		/* Allow any local user to do anything (dangerous!). */
+        		polkit.addRule(function(action, subject) {
+          			if (subject.local) return "yes";
+        		});
+      	'';
+  };
+  # FLATPAK
+  services.flatpak = { enable = true; };
 
-services = {
-	postgresql = {enable = true;};
-	postgrest = {enable = true;};
-};
+  services = {
+    postgresql = { enable = true; };
+    postgrest = { enable = true; };
+  };
 }

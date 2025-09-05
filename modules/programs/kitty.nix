@@ -14,9 +14,9 @@
       confirm_os_window_close = 0;
       enable_audio_bell = "no";
       hide_window_decorations = "yes";
-      background_opacity = 0.84;
-      background_blur = 1;
-      dynamic_background_opacity = "yes";
+      #background_opacity = 0.84;
+      #background_blur = 1;
+      #dynamic_background_opacity = "yes";
       window_padding_width = 4;
       window_margin_width = 4;
       #

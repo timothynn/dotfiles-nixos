@@ -4,5 +4,6 @@
     python313
     python313Packages.pip
     pipenv
+    kaggle
   ];
 }
