@@ -14,4 +14,8 @@
     enable = true;
     xwayland.enable = true;
   };
+
+  stylix.targets.hyprland = {
+        enable = true;
+  };
 }

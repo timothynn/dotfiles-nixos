@@ -86,7 +86,6 @@
   environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
-    firefox
     home-manager
     docker-compose
     libsForQt5.qt5.qtgraphicaleffects
@@ -191,7 +190,23 @@
   services.flatpak = { enable = true; };
 
   services = {
-    postgresql = { enable = true; };
+    postgresql = { 
+    	enable = true; 
+	ensureUsers = [
+		{
+			name = "tim";
+		}
+		{
+			name = "postgres";
+		}
+	];
+	enableTCPIP = true;
+	ensureDatabases = [ "tim"  "postgres" ];
+	initialScript = pkgs.writeText "init-sql-script" ''
+  		alter user tim with password 'shrek';
+	'';
+
+    };
     postgrest = { enable = true; };
   };
 }

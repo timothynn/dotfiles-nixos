@@ -1,506 +1,513 @@
 { config, pkgs, lib, ... }:
 
 {
+  home.packages = with pkgs; [ pyright pylint black ];
+
   programs.nixvim = {
     enable = true;
+    globals.mapleader = " "; # <Space> is leader key
+
+    # UI + editing options
+    opts = {
+      number = true; # show absolute line numbers
+      relativenumber = true; # show relative line numbers
+      tabstop = 4;
+      shiftwidth = 4;
+      expandtab = true;
+      wrap = false;
+      cursorline = true;
+      scrolloff = 8;
+      termguicolors = true;
+    };
+
     colorschemes.catppuccin = {
       enable = true;
-      settings = {
-        flavour = "mocha";
-      };
+      settings = { flavour = "mocha"; };
     };
-    
-    # # Global options
-    # globals = {
-    #   mapleader = " ";
-    #   maplocalleader = ",";
-    #   # Better search
-    #   incsearch = true;
-    #   hlsearch = true;
-    #   ignorecase = true;
-    #   smartcase = true;
-    #   # Better editing
-    #   expandtab = true;
-    #   shiftwidth = 2;
-    #   tabstop = 2;
-    #   softtabstop = 2;
-    #   autoindent = true;
-    #   smartindent = true;
-    #   # Better UI
-    #   number = true;
-    #   relativenumber = true;
-    #   cursorline = true;
-    #   signcolumn = "yes";
-    #   colorcolumn = "80";
-    #   # Better splits
-    #   splitbelow = true;
-    #   splitright = true;
-    #   # Better file handling
-    #   hidden = true;
-    #   autoread = true;
-    #   # Better completion
-    #   completeopt = "menuone,noselect";
-    #   # Better terminal
-    #   termguicolors = true;
-    # };
+    extraPlugins = with pkgs; [
+      vimPlugins.noice-nvim
+      vimPlugins.nui-nvim
+      vimPlugins.dressing-nvim
+      vimPlugins.nvim-notify
+      vimPlugins.iron-nvim
+      (vimUtils.buildVimPlugin {
+        pname = "venv-selector-nvim";
+        version = "unstable";
+        src = pkgs.fetchFromGitHub {
+          owner = "linux-cultist";
+          repo = "venv-selector.nvim";
+          rev = "main"; # or lock to a commit hash
+          sha256 = "sha256-6bCageV2Wqm8j+pNZnyDcSzf5SH9frjOLweixvaz3dI=";
+        };
+      })
 
-    # # Keymaps
-    # keymaps = [
-    #   # General navigation
-    #   {
-    #     mode = "n";
-    #     key = "<C-h>";
-    #     action = "<C-w>h";
-    #     options.desc = "Navigate to left split";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<C-j>";
-    #     action = "<C-w>j";
-    #     options.desc = "Navigate to bottom split";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<C-k>";
-    #     action = "<C-w>k";
-    #     options.desc = "Navigate to top split";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<C-l>";
-    #     action = "<C-w>l";
-    #     options.desc = "Navigate to right split";
-    #   }
-    #   # File management
-    #   {
-    #     mode = "n";
-    #     key = "<leader>e";
-    #     action = "<cmd>NvimTreeToggle<CR>";
-    #     options.desc = "Toggle file explorer";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<leader>ff";
-    #     action = "<cmd>Telescope find_files<CR>";
-    #     options.desc = "Find files";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<leader>fg";
-    #     action = "<cmd>Telescope live_grep<CR>";
-    #     options.desc = "Live grep";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<leader>fb";
-    #     action = "<cmd>Telescope buffers<CR>";
-    #     options.desc = "Find buffers";
-    #   }
-    #   # LSP keymaps
-    #   {
-    #     mode = "n";
-    #     key = "gd";
-    #     action = "<cmd>lua vim.lsp.buf.definition()<CR>";
-    #     options.desc = "Go to definition";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "gr";
-    #     action = "<cmd>lua vim.lsp.buf.references()<CR>";
-    #     options.desc = "Go to references";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "K";
-    #     action = "<cmd>lua vim.lsp.buf.hover()<CR>";
-    #     options.desc = "Show hover";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<leader>ca";
-    #     action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
-    #     options.desc = "Code actions";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<leader>rn";
-    #     action = "<cmd>lua vim.lsp.buf.rename()<CR>";
-    #     options.desc = "Rename symbol";
-    #   }
-    #   # DAP keymaps
-    #   {
-    #     mode = "n";
-    #     key = "<leader>db";
-    #     action = "<cmd>lua require('dap').toggle_breakpoint()<CR>";
-    #     options.desc = "Toggle breakpoint";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<leader>dc";
-    #     action = "<cmd>lua require('dap').continue()<CR>";
-    #     options.desc = "Continue/Start debugging";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<leader>di";
-    #     action = "<cmd>lua require('dap').step_into()<CR>";
-    #     options.desc = "Step into";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<leader>do";
-    #     action = "<cmd>lua require('dap').step_over()<CR>";
-    #     options.desc = "Step over";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<leader>du";
-    #     action = "<cmd>lua require('dap').step_out()<CR>";
-    #     options.desc = "Step out";
-    #   }
-    #   # Git integration
-    #   {
-    #     mode = "n";
-    #     key = "<leader>gs";
-    #     action = "<cmd>Git<CR>";
-    #     options.desc = "Git status";
-    #   }
-    #   {
-    #     mode = "n";
-    #     key = "<leader>gb";
-    #     action = "<cmd>Git blame<CR>";
-    #     options.desc = "Git blame";
-    #   }
-    # ];
+    ];
 
-    # # Plugins
-    # plugins = {
-    #   # Essential plugins
-    #   nvim-tree = {
-    #     enable = true;
-    #     git.enable = true;
-    #     renderer.icons.show.git = true;
-    #   };
-      
-    #   telescope = {
-    #     enable = true;
-    #     extensions = {
-    #       fzf-native.enable = true;
-    #       file-browser.enable = true;
-    #       project-nvim.enable = true;
-    #     };
-    #   };
+    plugins = {
+      web-devicons.enable = true;
 
-    #   # LSP and completion
-    #   lsp = {
-    #     enable = true;
-    #     servers = {
-    #       # Python
-    #       pyright = {
-    #         enable = true;
-    #         settings = {
-    #           python.analysis = {
-    #             typeCheckingMode = "basic";
-    #             autoSearchPaths = true;
-    #             useLibraryCodeForTypes = true;
-    #           };
-    #         };
-    #       };
-    #       # Rust
-    #       rust-analyzer = {
-    #         enable = true;
-    #         settings = {
-    #           rust-analyzer.checkOnSave.command = "clippy";
-    #         };
-    #       };
-    #       # Go
-    #       gopls = {
-    #         enable = true;
-    #         settings = {
-    #           gopls.usePlaceholders = true;
-    #           gopls.completeUnimported = true;
-    #         };
-    #       };
-    #       # JavaScript/TypeScript
-    #       tsserver = {
-    #         enable = true;
-    #         settings = {
-    #           typescript.preferences.includePackageJsonAutoImports = "on";
-    #         };
-    #       };
-    #       # SQL
-    #       sqlls = {
-    #         enable = true;
-    #         package = null;
-    #       };
-    #       # YAML
-    #       yamlls.enable = true;
-    #       # JSON
-    #       jsonls.enable = true;
-    #       # Markdown
-    #       marksman.enable = true;
-    #       # Docker
-    #       dockerls.enable = true;
-    #       # Terraform
-    #       terraformls.enable = true;
-    #       # Nix
-    #       nil_ls.enable = true;
-    #     };
-    #   };
+      treesitter = {
+        enable = true;
+        grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+          bash
+          json
+          lua
+          make
+          markdown
+          nix
+          regex
+          toml
+          vim
+          vimdoc
+          xml
+          yaml
+        ];
+      };
 
-    #   # Completion
-    #   cmp = {
-    #     enable = true;
-    #     settings.sources = [
-    #       { name = "nvim_lsp"; }
-    #       { name = "nvim_lua"; }
-    #       { name = "luasnip"; }
-    #       { name = "buffer"; }
-    #       { name = "path"; }
-    #       { name = "git"; }
-    #     ];
-    #   };
+      # telescope
+      telescope = { enable = true; };
 
-    #   luasnip = {
-    #     enable = true;
-    #     fromVscode = [ 1 ];
-    #   };
+      # bufferline
+      bufferline = {
+        enable = true;
+        settings = {
+          options = {
+            diagnostics = "nvim_lsp";
+            separator_style = "slant";
+          };
+        };
+      };
 
-    #   # Treesitter for syntax highlighting
-    #   treesitter = {
-    #     enable = true;
-    #     settings = {
-    #       highlight = {
-    #         enable = true;
-    #         additional_vim_regex_highlighting = false;
-    #       };
-    #       indent = { enable = true; };
-    #       ensure_installed = [
-    #         "python"
-    #         "rust"
-    #         "go"
-    #         "javascript"
-    #         "typescript"
-    #         "tsx"
-    #         "json"
-    #         "yaml"
-    #         "toml"
-    #         "sql"
-    #         "markdown"
-    #         "dockerfile"
-    #         "terraform"
-    #         "nix"
-    #         "bash"
-    #         "lua"
-    #         "vim"
-    #       ];
-    #     };
-    #   };
+      # Lualine
+      lualine = {
+        enable = true;
+        settings = {
+          options = {
+            theme = "catppuccin";
+            section_separators = {
+              left = "";
+              right = "";
+            };
+            component_separators = {
+              left = "";
+              right = "";
+            };
+          };
+        };
+      };
 
-    #   # Git integration
-    #   gitsigns = {
-    #     enable = true;
-    #     settings = {
-    #       signs = {
-    #         add = { text = "+"; };
-    #         change = { text = "~"; };
-    #         delete = { text = "_"; };
-    #         topdelete = { text = "‾"; };
-    #         changedelete = { text = "~"; };
-    #       };
-    #     };
-    #   };
+      # which-key
+      which-key = {
+        enable = true;
+        settings = {
+          plugins = {
+            marks = true;
+            registers = true;
+          };
+          win.border = "single";
+        };
+      };
+      mini = { enable = true; };
+      mini-icons.enable = true;
 
-    #   # Status line
-    #   lualine = {
-    #     enable = true;
-    #     theme = "auto";
-    #     sections = {
-    #       lualine_a = [ "mode" ];
-    #       lualine_b = [ "branch" "diff" "diagnostics" ];
-    #       lualine_c = [ "filename" ];
-    #       lualine_x = [ "encoding" "filetype" ];
-    #       lualine_y = [ "progress" ];
-    #       lualine_z = [ "location" ];
-    #     };
-    #   };
+      # LSP support
+      lsp = {
+        enable = true;
+        servers = {
+          # Python LSP
+          pyright = {
+            enable = true;
+            settings = {
+              python.pythonPath =
+                "venv"; # venv-selector will override this dynamically
+            };
+          };
+        };
+        keymaps.lspBuf = {
+          gd = "definition"; # Go to definition
+          gD = "declaration"; # Go to declaration
+          gi = "implementation";
+          gr = "references";
+          K = "hover"; # Hover docs
+          rn = "rename"; # Rename symbol
+        };
+      };
+      none-ls = {
+        enable = true;
+        sources = {
+          diagnostics.pylint.enable = true; # Python linter
+          formatting.black.enable = true; # Python formatter
+        };
+      };
 
-    #   # Buffer line
-    #   bufferline = {
-    #     enable = true;
-    #     settings.options = {
-    #       diagnostics = "nvim_lsp";
-    #       always_show_bufferline = false;
-    #       show_buffer_close_icons = true;
-    #       show_close_icon = false;
-    #       color_icons = true;
-    #     };
-    #   };
+      # Completion engine
+      cmp = {
+        enable = true;
+        settings = {
+          sources =
+            [ { name = "nvim_lsp"; } { name = "buffer"; } { name = "path"; } ];
+          mapping = {
+            "<CR>" = "cmp.mapping.confirm({ select = true })";
+            "<C-Space>" = "cmp.mapping.complete()";
+            "<C-e>" = "cmp.mapping.close()";
+            "<Tab>" = "cmp.mapping.select_next_item()";
+            "<S-Tab>" = "cmp.mapping.select_prev_item()";
+          };
+        };
+      };
 
-    #   # Indent guides
-    #   indent-blankline = {
-    #     enable = true;
-    #     settings = {
-    #       indent = { char = "│"; };
-    #       scope = { enabled = true; show_start = true; char = "│"; };
-    #     };
-    #   };
+      # Snippets (for completion)
+      luasnip.enable = true;
 
-    #   # Comment
-    #   comment = {
-    #     enable = true;
-    #     settings.padding = true;
-    #     settings.sticky = true;
-    #     settings.ignore = "^$";
-    #     settings.toggler.line = "gcc";
-    #     settings.opleader.line = "gc";
-    #     settings.extra.above = "gcO";
-    #     settings.extra.below = "gco";
-    #     settings.extra.eol = "gcA";
-    #     settings.motions.enable = true;
-    #   };
+      # nvim-tree
+      nvim-tree = {
+        enable = true;
+        settings = {
+          view = {
+            width = 30;
+            side = "left";
+          };
+          renderer = { group_empty = true; };
+          filters = { dotfiles = false; };
+        };
+      };
 
-    #   # Surround
-    #   nvim-surround = {
-    #     enable = true;
-    #     settings = {
-    #       keymaps = {
-    #         normal = "ys";
-    #         normal_cur = "yss";
-    #         normal_line = "yS";
-    #         visual = "S";
-    #         delete = "ds";
-    #         change = "cs";
-    #       };
-    #     };
-    #   };
+      # Toggle term
+      toggleterm = {
+        enable = true;
+        settings = {
+          direction = "float";
+          shade_terminals = true;
+          start_in_insert = true;
+        };
+      };
 
-    #   # Auto pairs
-    #   nvim-autopairs = {
-    #     enable = true;
-    #     settings = {
-    #       check_ts = true;
-    #       disable_filetype = [ "TelescopePrompt" "spectre_panel" ];
-    #     };
-    #   };
+      # Dashboard
+      alpha = {
+        enable = true;
+        theme = "dashboard"; # other options: "startify", "theta"
+      };
 
-    #   # DAP (Debug Adapter Protocol)
-    #   dap = {
-    #     enable = true;
-    #   };
+      gitsigns.enable = true; # git hunk signs & inline blame
+      trouble.enable = true; # diagnostics/quickfix UI
+      # symbols-outline.enable = true; # sidebar symbol tree
+      nvim-autopairs.enable = true; # auto-close brackets/quotes
+      hop.enable = true; # fast cursor jumps
+      dap.enable = true; # debugging core
+      dap-ui.enable = true; # debugging UI
 
-    #   # DAP Python
-    #   dap-python = {
-    #     enable = true;
-    #   };
-      
-    #   # DAP Go
-    #   dap-go = {
-    #     enable = true;
-    #   };
+    };
 
-    #   # DAP UI
-    #   dap-ui = {
-    #     enable = true;
-    #   };
-
-    #   # Data engineering specific plugins
-    #   # CSV handling
-    #   # csv-vim = {
-    #   #   enable = true;
-    #   #   filetype = "csv";
-    #   #   delimiter_char = ",";
-    #   #   column_highlight = "CursorColumn";
-    #   #   strip_whitespace = 1;
-    #   # };
+    extraConfigLua = ''
+            require("venv-selector").setup({
+              auto_refresh = true,
+              name = ".venv",
+            })
 
 
+            local alpha = require("alpha")
+            local dashboard = require("alpha.themes.dashboard")
+
+            dashboard.section.header.val = {
+              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡤⣤⣤⡀   ",
+              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠋⠁⠀⠘⢿⣆ ",
+              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⡟⠁⠀⠀⠀⠀⠀⠀⠙⣧",
+              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⡀⠀⠀⠀⣿⠁⠀⠀⣠⣶⣶⣦⡀⠀⠀⣿",
+              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡏⠀⠀⠉⠙⢿⣦⠀⣿⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⣿",
+              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣇⠀⠀⠀⠀⣸⡿⠀⢿⡀⠀⠀⠈⠛⠛⠉⠀⠀⢀⡿",
+              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣷⣄⣀⣠⡿⠁⠀⠀⠙⠶⣤⣄⣀⣀⣠⣴⡶⠋",
+            }
+
+            dashboard.section.buttons.val = {
+              dashboard.button("e", "  New File", ":ene <CR>"),
+              dashboard.button("f", "  Find File", ":Telescope find_files<CR>"),
+              dashboard.button("r", "  Recent Files", ":Telescope oldfiles<CR>"),
+              dashboard.button("t", "  Terminal", ":ToggleTerm<CR>"),
+              dashboard.button("q", "  Quit", ":qa<CR>"),
+            }
+
+            dashboard.section.footer.val = { "⚡ Happy hacking ⚡" }
+
+            alpha.setup(dashboard.config)
+
+      -- noice.nvim setup
+          require("noice").setup({
+            lsp = { progress = { enabled = true } },
+            presets = { bottom_search = true, command_palette = true }
+          })
+
+          -- dressing.nvim (better input/select UIs)
+          require("dressing").setup()
+
+          -- notify.nvim as default notification UI
+          vim.notify = require("notify")
+
+          -- iron.nvim (REPL integration)
+          local iron = require("iron.core")
+          iron.setup({
+            config = {
+              repl_definition = {
+                python = { command = {"python"} },
+              },
+              repl_open_cmd = "vertical botright 60 split"
+            },
+            keymaps = {
+              send_motion = "<leader>sc",
+              visual_send = "<leader>sc",
+              send_file = "<leader>sf",
+              send_line = "<leader>sl",
+              exit = "<leader>sq",
+              clear = "<leader>cl",
+            }
+          })
 
 
+    '';
 
-    #   # # Color schemes
-    #   # catppuccin = {
-    #   #   enable = true;
-    #   #   flavour = "mocha";
-    #   #   background = {
-    #   #     light = "latte";
-    #   #     dark = "mocha";
-    #   #   };
-    #   #   transparent_background = false;
-    #   #   term_colors = true;
-    #   #   integrations = {
-    #   #     aerial = true;
-    #   #     alpha = true;
-    #   #     barbar = true;
-    #   #     beacon = true;
-    #   #     cmp = true;
-    #   #     coc_nvim = true;
-    #   #     dap = true;
-    #   #     dap_ui = true;
-    #   #     fern = true;
-    #   #     fidget = true;
-    #   #     gitgutter = true;
-    #   #     gitsigns = true;
-    #   #     harpoon = true;
-    #   #     illuminate = true;
-    #   #     indent_blankline = true;
-    #   #     leap = true;
-    #   #     lightspeed = true;
-    #   #     lsp_saga = true;
-    #   #     lsp_trouble = true;
-    #   #     mason = true;
-    #   #     native_lsp = true;
-    #   #     neogit = true;
-    #   #     neotest = true;
-    #   #     neotree = true;
-    #   #     notify = true;
-    #   #     nvimtree = true;
-    #   #     overseer = true;
-    #   #     pounce = true;
-    #   #     symbols_outline = true;
-    #   #     telekasten = true;
-    #   #     telescope = true;
-    #   #     treesitter = true;
-    #   #     treesitter_context = true;
-    #   #     ts_rainbow = true;
-    #   #     vim_sneak = true;
-    #   #     vimwiki = true;
-    #   #     which_key = true;
-    #   #   };
-    #   # };
-    # };
+    # Auto-format on save
+    autoCmd = [{
+      event = "BufWritePre";
+      pattern = "*.py";
+      command = "lua vim.lsp.buf.format()";
+    }];
 
-    # # Extra packages
-    # extraPackages = with pkgs; [
-    #   # LSP servers
-    #   pyright
-    #   rust-analyzer
-    #   gopls
-    #   typescript
-    #   nodePackages.typescript-language-server
-    #   yaml-language-server
-    #   json-language-server
-    #   marksman
-    #   docker-language-server
-    #   terraform-ls
-    #   nil
-      
-    #   # Debuggers
-    #   python39Packages.debugpy
-    #   delve
-      
-    #   # Data engineering tools
-    #   jupyter
-    #   sqlite
-    #   postgresql
-    #   mysql80
-      
-    #   # Development tools
-    #   git
-    #   ripgrep
-    #   fd
-    #   fzf
-    #   tree-sitter
-    # ];
+    # Keymaps
+    keymaps = [
+      # Telescope
+      {
+        mode = "n";
+        key = "<leader>ff";
+        action = "<cmd>Telescope find_files<CR>";
+        options.desc = "Find files";
+      }
+      {
+        mode = "n";
+        key = "<leader>fg";
+        action = "<cmd>Telescope live_grep<CR>";
+        options.desc = "Live grep";
+      }
+      {
+        mode = "n";
+        key = "<leader>fb";
+        action = "<cmd>Telescope buffers<CR>";
+        options.desc = "Find buffers";
+      }
+      {
+        mode = "n";
+        key = "<leader>fh";
+        action = "<cmd>Telescope help_tags<CR>";
+        options.desc = "Find help";
+      }
+      {
+        mode = "n";
+        key = "<leader>?";
+        action = "<cmd>Telescope keymaps<CR>";
+        options.desc = "Search keymaps";
+      }
+
+      # Bufferline
+      {
+        mode = "n";
+        key = "<S-l>";
+        action = "<cmd>BufferLineCycleNext<CR>";
+        options.desc = "Next buffer";
+      }
+      {
+        mode = "n";
+        key = "<S-h>";
+        action = "<cmd>BufferLineCyclePrev<CR>";
+        options.desc = "Previous buffer";
+      }
+
+      # Basics
+      {
+        mode = "n";
+        key = "<leader>w";
+        action = "<cmd>w<CR>";
+        options.desc = "Save file";
+      }
+      {
+        mode = "n";
+        key = "<leader>q";
+        action = "<cmd>q<CR>";
+        options.desc = "Quit";
+      }
+
+      # nvim-tree
+      {
+        mode = "n";
+        key = "<leader>e";
+        action = "<cmd>NvimTreeToggle<CR>";
+        options.desc = "Toggle file explorer";
+      }
+      {
+        mode = "n";
+        key = "<leader>f";
+        action = "<cmd>NvimTreeFindFile<CR>";
+        options.desc = "Focus current file in explorer";
+      }
+
+      # PYTHON STUFF
+      {
+        mode = "n";
+        key = "<leader>lf";
+        action = "<cmd>lua vim.lsp.buf.format()<CR>";
+        options.desc = "Format buffer";
+      }
+      {
+        mode = "n";
+        key = "<leader>la";
+        action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+        options.desc = "Code action";
+      }
+      {
+        mode = "n";
+        key = "<leader>ld";
+        action = "<cmd>lua vim.diagnostic.open_float()<CR>";
+        options.desc = "Show diagnostics";
+      }
+      {
+        mode = "n";
+        key = "[d";
+        action = "<cmd>lua vim.diagnostic.goto_prev()<CR>";
+        options.desc = "Prev diagnostic";
+      }
+      {
+        mode = "n";
+        key = "]d";
+        action = "<cmd>lua vim.diagnostic.goto_next()<CR>";
+        options.desc = "Next diagnostic";
+      }
+
+      # Venv selector
+      {
+        mode = "n";
+        key = "<leader>vs";
+        action = "<cmd>VenvSelect<CR>";
+        options.desc = "Select Python venv";
+      }
+      # # Hover / Signature help
+      # { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<CR>"; options.desc = "LSP Hover"; }
+      # { mode = "n"; key = "<leader>sh"; action = "<cmd>lua vim.lsp.buf.signature_help()<CR>"; options.desc = "LSP Signature Help"; }
+
+      # # Go to definition / references
+      # { mode = "n"; key = "gd"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; options.desc = "LSP Go to Definition"; }
+      # { mode = "n"; key = "gr"; action = "<cmd>lua vim.lsp.buf.references()<CR>"; options.desc = "LSP References"; }
+
+      # # Workspace symbols (could use Telescope)
+      # { mode = "n"; key = "<leader>ws"; action = "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"; options.desc = "Workspace Symbols"; }
+
+      # # Code actions
+      # { mode = "n"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; options.desc = "LSP Code Action"; }
+
+      # Toggle term
+      {
+        mode = "n"; # normal mode
+        key = "<A-i>"; # Alt+i
+        action = "<cmd>ToggleTerm<CR>";
+        options.desc = "Toggle floating terminal";
+      }
+      {
+        mode = "t"; # terminal mode
+        key = "<Esc>"; # exit to normal mode
+        action = "<C-\\><C-n>";
+        options.desc = "Exit terminal mode";
+      }
+
+      # trouble
+      {
+        mode = "n";
+        key = "<leader>xx";
+        action = "<cmd>TroubleToggle<CR>";
+        options.desc = "Toggle Trouble";
+      }
+
+      # symbols outline
+      # {
+      #   mode = "n";
+      #   key = "<leader>so";
+      #   action = "<cmd>SymbolsOutline<CR>";
+      #   options.desc = "Symbols Outline";
+      # }
+
+      # gitsigns
+      {
+        mode = "n";
+        key = "]c";
+        action = "<cmd>Gitsigns next_hunk<CR>";
+        options.desc = "Next Git hunk";
+      }
+      {
+        mode = "n";
+        key = "[c";
+        action = "<cmd>Gitsigns prev_hunk<CR>";
+        options.desc = "Prev Git hunk";
+      }
+      {
+        mode = "n";
+        key = "<leader>gp";
+        action = "<cmd>Gitsigns preview_hunk<CR>";
+        options.desc = "Preview hunk";
+      }
+      {
+        mode = "n";
+        key = "<leader>gb";
+        action = "<cmd>Gitsigns blame_line<CR>";
+        options.desc = "Git blame";
+      }
+
+      # dap
+      {
+        mode = "n";
+        key = "<F5>";
+        action = "<cmd>lua require'dap'.continue()<CR>";
+        options.desc = "DAP Continue";
+      }
+      {
+        mode = "n";
+        key = "<F10>";
+        action = "<cmd>lua require'dap'.step_over()<CR>";
+        options.desc = "DAP Step Over";
+      }
+      {
+        mode = "n";
+        key = "<F11>";
+        action = "<cmd>lua require'dap'.step_into()<CR>";
+        options.desc = "DAP Step Into";
+      }
+      {
+        mode = "n";
+        key = "<F12>";
+        action = "<cmd>lua require'dap'.step_out()<CR>";
+        options.desc = "DAP Step Out";
+      }
+      {
+        mode = "n";
+        key = "<leader>b";
+        action = "<cmd>lua require'dap'.toggle_breakpoint()<CR>";
+        options.desc = "DAP Breakpoint";
+      }
+      {
+        mode = "n";
+        key = "<leader>dr";
+        action = "<cmd>lua require'dap'.repl.open()<CR>";
+        options.desc = "DAP REPL";
+      }
+
+      # iron.nvim (REPL)
+      {
+        mode = "n";
+        key = "<leader>sl";
+        action = "<cmd>IronRepl<CR>";
+        options.desc = "Open REPL";
+      }
+      {
+        mode = "n";
+        key = "<leader>sc";
+        action = "<cmd>IronSend<CR>";
+        options.desc = "Send to REPL";
+      }
+
+    ];
   };
 }

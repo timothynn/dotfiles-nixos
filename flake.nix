@@ -12,9 +12,13 @@
     };
     catppuccin.url = "github:catppuccin/nix";
     sops-nix.url = "github:Mic92/sops-nix";
+    stylix = {
+      url = "github:nix-community/stylix/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, catppuccin, sops-nix, ... }:
+  outputs = { self, nixpkgs, home-manager, nixvim, catppuccin, sops-nix, stylix, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
@@ -29,6 +33,8 @@
           home-manager.nixosModules.home-manager
 	        nixvim.nixosModules.nixvim
 		sops-nix.nixosModules.sops
+                  stylix.nixosModules.stylix
+
           # catppuccin.nixosModules.catppuccin
           {
             home-manager.useGlobalPkgs = true;
@@ -46,6 +52,8 @@
           ./home/tim.nix
 	        nixvim.homeModules.nixvim
           catppuccin.homeModules.catppuccin
+                    stylix.homeModules.stylix
+
         ];
       };
        homeConfigurations.root = home-manager.lib.homeManagerConfiguration {

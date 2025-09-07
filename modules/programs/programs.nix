@@ -3,6 +3,7 @@
 {
 	imports = [
 		./hyprland/hyprland.nix
+        ./firefox.nix
     ./eza.nix
 		./fzf.nix
 		./git.nix
