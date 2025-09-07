@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 
 {
-  packages.feh = {
+  programs.feh = {
     enable = true;
   };
 }
