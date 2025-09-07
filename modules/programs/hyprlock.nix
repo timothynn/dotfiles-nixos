@@ -1,57 +1,32 @@
 { config, pkgs, ... }:
 
-let
-  theme = config.myTheme;
-in
 {
   programs.hyprlock = {
     enable = true;
 
     settings = {
       general = {
-        # Background color + blur
-        background_color = theme.base;
-        blur_size = 8;
-        blur_passes = 3;
+        blur_size = 12;
+        blur_passes = 4;
         noise = 0.02;
-        contrast = 1.05;
-        brightness = 0.95;
-        vibrancy = 0.15;
+        contrast = 1.06;
+        brightness = 0.94;
+        vibrancy = 0.2;
       };
 
       input-field = {
         monitor = "eDP-1"; # change if you have external monitors
-        size = "300,50";
-        position = "0, -150";
-        rounding = 12;
-        outer_color = theme.accent;
-        inner_color = theme.base;
-        font_color = theme.text;
+        size = "340,54";
+        position = "0, -140";
+        rounding = 10;
+        font_family = "JetBrainsMono Nerd Font";
         placeholder_text = "Password...";
         fade_on_empty = true;
       };
 
-      label = [
-        {
-          text = "$TIME";
-          font_size = 60;
-          color = theme.accent;
-          position = "0, -300";
-          halign = "center";
-        }
-        {
-          text = "$DATE";
-          font_size = 20;
-          color = theme.text;
-          position = "0, -250";
-          halign = "center";
-        }
-      ];
-
       indicator = {
-        size = 20;
-        color = theme.accent;
-        border_size = 3;
+        size = 12;
+        border_size = 2;
       };
     };
   };

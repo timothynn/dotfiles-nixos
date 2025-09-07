@@ -1,13 +1,10 @@
-# modules/loader.nix
-{ lib, ... }:
+{ lib, config, pkgs, ...}:
 
-let
-  modulePaths =
-    builtins.filter
-      (path: lib.hasSuffix ".nix" path && baseNameOf path != "loader.nix" )
-      (lib.filesystem.listFilesRecursive ./.);
-in
-  {
-    imports = map import modulePaths;
-  }
-
+{
+	imports = [
+		./programs/programs.nix
+		./services/services.nix
+		./desktop/desktop.nix
+    ./dev/dev.nix
+	];
+}
