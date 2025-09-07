@@ -147,6 +147,9 @@
     tree
     prefect
     pgadmin4
+
+    direnv
+    wlogout
   ];
 
   xdg.mimeApps = {

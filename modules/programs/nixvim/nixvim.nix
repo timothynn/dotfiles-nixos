@@ -199,6 +199,8 @@
         };
       };
 
+      chadtree = { enable = true; };
+
       # Toggle term
       toggleterm = {
         enable = true;
@@ -252,14 +254,14 @@
 
       # Markdown preview
       markdown-preview = {
-      enable = true;
-      settings = {
-        auto_start = 0;       # don’t auto preview on file open
-        auto_close = 1;       # close preview when buffer closes
-        refresh_slow = 0;     # live update as you type
-        browser = "firefox";  # or "chromium", "brave", etc.
+        enable = true;
+        settings = {
+          auto_start = 0; # don’t auto preview on file open
+          auto_close = 1; # close preview when buffer closes
+          refresh_slow = 0; # live update as you type
+          browser = "firefox"; # or "chromium", "brave", etc.
+        };
       };
-    };
 
     };
 
@@ -589,7 +591,7 @@
       # Markdown preview
       {
         mode = "n";
-        key = "<leader>mp";   # markdown preview
+        key = "<leader>mp"; # markdown preview
         action = "<cmd>MarkdownPreviewToggle<CR>";
         options.desc = "Toggle Markdown Preview";
       }

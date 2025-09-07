@@ -16,7 +16,8 @@
     ./rofi.nix
     ./starship.nix
     ./thunar.nix
-    ./waybar/waybar.nix
+    # ./waybar/waybar.nix
+		./waybar.nix
     ./zellij.nix
     ./zoxide.nix
     ./yazi.nix
@@ -24,5 +25,7 @@
     ./skim.nix
     ./cava.nix
 		./feh.nix
-  ];
+		./dbeaver.nix
+	];
+
 }
