@@ -17,7 +17,7 @@
       layer = "overlay";
 
       # Style
-      css = builtins.readFile ./style.css;
+      # css = builtins.readFile ./style.css;
 
       # Shortcuts
       keybinds = {

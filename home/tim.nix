@@ -18,33 +18,53 @@
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
   catppuccin = {
-    enable = true;
+    enable = false;
     flavor = "mocha";
     accent = "red";
     cava.enable = false;
   };
-    
+
   # Stylix
   stylix = {
     enable = true;
-    image = pkgs.fetchurl {
-    url = "https://www.pixelstalk.net/wp-content/uploads/2016/05/Epic-Anime-Awesome-Wallpapers.jpg";
-    hash = "sha256-enQo3wqhgf0FEPHj2coOCvo7DuZv+x5rL/WIo4qPI50=";
-  };
-  polarity = "dark";
-  fonts = {
-    monospace = {
-        package = pkgs.jetbrains-mono;
-        name = "JetbrainsMono Nerd Font";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
+    image = pkgs.fetchurl {
+      url =
+        "https://www.pixelstalk.net/wp-content/uploads/2025/05/A-dense-forest-with-towering-evergreens-and-a-glowing-mist-rising-from-the-ground.webp";
+      hash = "sha256-e8RDn46vsP4b/kLAmYXKgBL12soOXJxAqpRvSruqbXA=";
     };
-    serif = config.stylix.fonts.monospace;
-    sansSerif = config.stylix.fonts.monospace;
-    emoji = config.stylix.fonts.monospace;
-  };
-  targets = {
-    cava.rainbow.enable = true;
-  };
+    polarity = "dark";
+
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
+      size = 18;
+    };
+
+    fonts = {
+      monospace = {
+        package = pkgs.fantasque-sans-mono;
+        name = "FantasqueSansM Nerd Font";
+
+      };
+      sizes = {
+        applications = 11;
+        desktop = 11;
+        popups = 11;
+        terminal = 11;
+      };
+      serif = config.stylix.fonts.monospace;
+      sansSerif = config.stylix.fonts.monospace;
+      emoji = config.stylix.fonts.monospace;
+    };
+    targets = {
+      cava.rainbow.enable = true;
+      kitty = {
+        enable = true;
+
+      };
+    };
   };
 
   # The home.packages option allows you to install Nix packages into your
@@ -125,7 +145,7 @@
 
     databricks-cli
     tree
-    prefect 
+    prefect
     pgadmin4
   ];
 
@@ -151,7 +171,7 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-   
+
   };
 
   # Home Manager can also manage your environment variables through

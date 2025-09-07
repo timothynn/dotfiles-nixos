@@ -17,5 +17,6 @@
 
   stylix.targets.hyprland = {
         enable = true;
+        hyprpaper.enable = true;
   };
 }

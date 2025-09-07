@@ -4,8 +4,8 @@
       gaps_in = 2;
       gaps_out = 10;
       border_size = 1;
-      "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-      "col.inactive_border" = "rgba(595959aa)";
+      # "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+      # "col.inactive_border" = "rgba(595959aa)";
       resize_on_border = false;
       allow_tearing = false;
       layout = "dwindle";
@@ -21,7 +21,7 @@
         enabled = true;
         range = 4;
         render_power = 3;
-        color = "rgba(1a1a1aee)";
+        # color = "rgba(1a1a1aee)";
       };
 
       blur = {
@@ -69,8 +69,8 @@
     master.new_status = "master";
 
     misc = {
-      force_default_wallpaper = -1;
-      disable_hyprland_logo = false;
+      force_default_wallpaper = 0;
+      disable_hyprland_logo = true;
     };
   };
 }

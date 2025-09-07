@@ -5,10 +5,10 @@
     enable = true;
 
     # fonts & UI tweaks
-    font = {
-      name = "JetBrainsMono Nerd Font";
-      size = 10;
-    };
+    # font = {
+    #   name = "JetBrainsMono Nerd Font";
+    #   size = 10;
+    # };
 
     settings = {
       confirm_os_window_close = 0;

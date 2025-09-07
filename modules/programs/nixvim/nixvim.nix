@@ -1,11 +1,13 @@
 { config, pkgs, lib, ... }:
 
 {
-  home.packages = with pkgs; [ pyright pylint black ];
+  home.packages = with pkgs; [ pyright pylint black wl-clipboard nixpkgs-fmt ];
 
   programs.nixvim = {
     enable = true;
     globals.mapleader = " "; # <Space> is leader key
+
+    clipboard.providers.wl-copy.enable = true;
 
     # UI + editing options
     opts = {
@@ -25,11 +27,11 @@
       settings = { flavour = "mocha"; };
     };
     extraPlugins = with pkgs; [
-      vimPlugins.noice-nvim
+      # vimPlugins.noice-nvim
       vimPlugins.nui-nvim
-      vimPlugins.dressing-nvim
-      vimPlugins.nvim-notify
-      vimPlugins.iron-nvim
+      # vimPlugins.dressing-nvim
+      # vimPlugins.nvim-notify
+      # vimPlugins.iron-nvim
       (vimUtils.buildVimPlugin {
         pname = "venv-selector-nvim";
         version = "unstable";
@@ -61,6 +63,7 @@
           vimdoc
           xml
           yaml
+          python
         ];
       };
 
@@ -122,6 +125,8 @@
                 "venv"; # venv-selector will override this dynamically
             };
           };
+
+          nil_ls.enable = true;
         };
         keymaps.lspBuf = {
           gd = "definition"; # Go to definition
@@ -132,6 +137,28 @@
           rn = "rename"; # Rename symbol
         };
       };
+
+      conform-nvim = {
+        enable = true;
+
+        # Configure formatters per language
+        settings = {
+          formatters_by_ft = {
+            python = [ "black" "isort" ];
+            nix = [ "nixpkgs-fmt" ];
+            lua = [ "stylua" ];
+            javascript = [ "prettier" ];
+            typescript = [ "prettier" ];
+          };
+
+          # Run formatters on save
+          format_on_save = {
+            lspFallback = true;
+            timeoutMs = 500;
+          };
+        };
+      };
+
       none-ls = {
         enable = true;
         sources = {
@@ -145,7 +172,7 @@
         enable = true;
         settings = {
           sources =
-            [ { name = "nvim_lsp"; } { name = "buffer"; } { name = "path"; } ];
+            [ { name = "lsp"; } { name = "buffer"; } { name = "path"; } ];
           mapping = {
             "<CR>" = "cmp.mapping.confirm({ select = true })";
             "<C-Space>" = "cmp.mapping.complete()";
@@ -195,71 +222,81 @@
       hop.enable = true; # fast cursor jumps
       dap.enable = true; # debugging core
       dap-ui.enable = true; # debugging UI
+      dressing.enable = true;
+      notify.enable = true;
+
+      iron = {
+        enable = true;
+
+        settings = {
+          repl_open_cmd = "vertical botright 80 split";
+          scratch_repl = true;
+
+          repl_definition = {
+            python = { command = [ "python3" ]; };
+            nix = { command = [ "nix" "repl" ]; };
+          };
+        };
+      };
+
+      noice = {
+        enable = true;
+        settings = {
+          lsp.progress.enabled = true;
+          presets = {
+            bottom_search = true;
+            command_palette = true;
+          };
+        };
+      };
+
+      # Markdown preview
+      markdown-preview = {
+      enable = true;
+      settings = {
+        auto_start = 0;       # don’t auto preview on file open
+        auto_close = 1;       # close preview when buffer closes
+        refresh_slow = 0;     # live update as you type
+        browser = "firefox";  # or "chromium", "brave", etc.
+      };
+    };
 
     };
 
     extraConfigLua = ''
-            require("venv-selector").setup({
-              auto_refresh = true,
-              name = ".venv",
-            })
+      require("venv-selector").setup({
+        auto_refresh = true,
+        name = ".venv",
+      })
 
+      if vim.tbl_islist == nil then
+        vim.tbl_islist = vim.islist
+      end
 
-            local alpha = require("alpha")
-            local dashboard = require("alpha.themes.dashboard")
+      local alpha = require("alpha")
+      local dashboard = require("alpha.themes.dashboard")
 
-            dashboard.section.header.val = {
-              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡤⣤⣤⡀   ",
-              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠋⠁⠀⠘⢿⣆ ",
-              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⡟⠁⠀⠀⠀⠀⠀⠀⠙⣧",
-              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⡀⠀⠀⠀⣿⠁⠀⠀⣠⣶⣶⣦⡀⠀⠀⣿",
-              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡏⠀⠀⠉⠙⢿⣦⠀⣿⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⣿",
-              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣇⠀⠀⠀⠀⣸⡿⠀⢿⡀⠀⠀⠈⠛⠛⠉⠀⠀⢀⡿",
-              "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣷⣄⣀⣠⡿⠁⠀⠀⠙⠶⣤⣄⣀⣀⣠⣴⡶⠋",
-            }
+      dashboard.section.header.val = {
+        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡤⣤⣤⡀   ",
+        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠋⠁⠀⠘⢿⣆ ",
+        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⡟⠁⠀⠀⠀⠀⠀⠀⠙⣧",
+        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⡀⠀⠀⠀⣿⠁⠀⠀⣠⣶⣶⣦⡀⠀⠀⣿",
+        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡏⠀⠀⠉⠙⢿⣦⠀⣿⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⣿",
+        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣇⠀⠀⠀⠀⣸⡿⠀⢿⡀⠀⠀⠈⠛⠛⠉⠀⠀⢀⡿",
+        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣷⣄⣀⣠⡿⠁⠀⠀⠙⠶⣤⣄⣀⣀⣠⣴⡶⠋",
+      }
 
-            dashboard.section.buttons.val = {
-              dashboard.button("e", "  New File", ":ene <CR>"),
-              dashboard.button("f", "  Find File", ":Telescope find_files<CR>"),
-              dashboard.button("r", "  Recent Files", ":Telescope oldfiles<CR>"),
-              dashboard.button("t", "  Terminal", ":ToggleTerm<CR>"),
-              dashboard.button("q", "  Quit", ":qa<CR>"),
-            }
+      dashboard.section.buttons.val = {
+        dashboard.button("e", "  New File", ":ene <CR>"),
+        dashboard.button("f", "  Find File", ":Telescope find_files<CR>"),
+        dashboard.button("r", "  Recent Files", ":Telescope oldfiles<CR>"),
+        dashboard.button("t", "  Terminal", ":ToggleTerm<CR>"),
+        dashboard.button("q", "  Quit", ":qa<CR>"),
+      }
 
-            dashboard.section.footer.val = { "⚡ Happy hacking ⚡" }
+      dashboard.section.footer.val = { "⚡ Happy hacking ⚡" }
 
-            alpha.setup(dashboard.config)
-
-      -- noice.nvim setup
-          require("noice").setup({
-            lsp = { progress = { enabled = true } },
-            presets = { bottom_search = true, command_palette = true }
-          })
-
-          -- dressing.nvim (better input/select UIs)
-          require("dressing").setup()
-
-          -- notify.nvim as default notification UI
-          vim.notify = require("notify")
-
-          -- iron.nvim (REPL integration)
-          local iron = require("iron.core")
-          iron.setup({
-            config = {
-              repl_definition = {
-                python = { command = {"python"} },
-              },
-              repl_open_cmd = "vertical botright 60 split"
-            },
-            keymaps = {
-              send_motion = "<leader>sc",
-              visual_send = "<leader>sc",
-              send_file = "<leader>sf",
-              send_line = "<leader>sl",
-              exit = "<leader>sq",
-              clear = "<leader>cl",
-            }
-          })
+      alpha.setup(dashboard.config)
 
 
     '';
@@ -386,6 +423,39 @@
         action = "<cmd>VenvSelect<CR>";
         options.desc = "Select Python venv";
       }
+
+      # REPL
+      # Open REPL
+      {
+        mode = "n";
+        key = "<leader>rr";
+        action = "<cmd>IronRepl<CR>";
+        options.desc = "Open REPL";
+      }
+
+      # Send line
+      {
+        mode = "n";
+        key = "<leader>rl";
+        action = "<cmd>IronSend<CR>";
+        options.desc = "Send line to REPL";
+      }
+
+      # Send visual selection
+      {
+        mode = "v";
+        key = "<leader>rs";
+        action = ":IronVisualSend<CR>";
+        options.desc = "Send selection to REPL";
+      }
+
+      # Send whole file
+      {
+        mode = "n";
+        key = "<leader>rf";
+        action = "ggVG:<C-u>IronVisualSend<CR>";
+        options.desc = "Send file to REPL";
+      }
       # # Hover / Signature help
       # { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<CR>"; options.desc = "LSP Hover"; }
       # { mode = "n"; key = "<leader>sh"; action = "<cmd>lua vim.lsp.buf.signature_help()<CR>"; options.desc = "LSP Signature Help"; }
@@ -506,6 +576,22 @@
         key = "<leader>sc";
         action = "<cmd>IronSend<CR>";
         options.desc = "Send to REPL";
+      }
+
+      # conform-nvim
+      {
+        mode = "n";
+        key = "<leader>cf";
+        action = "<cmd>ConformFormat<CR>";
+        options.desc = "Format current buffer";
+      }
+
+      # Markdown preview
+      {
+        mode = "n";
+        key = "<leader>mp";   # markdown preview
+        action = "<cmd>MarkdownPreviewToggle<CR>";
+        options.desc = "Toggle Markdown Preview";
       }
 
     ];

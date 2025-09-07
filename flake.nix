@@ -16,9 +16,14 @@
       url = "github:nix-community/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    base16.url = "github:SenchoPens/base16.nix";
+tt-schemes = {
+    url = "github:tinted-theming/schemes";
+    flake = false;
+  };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, catppuccin, sops-nix, stylix, ... }:
+  outputs = { self, nixpkgs, home-manager, nixvim, catppuccin, sops-nix, stylix,   ... } :
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
@@ -34,8 +39,6 @@
 	        nixvim.nixosModules.nixvim
 		sops-nix.nixosModules.sops
                   stylix.nixosModules.stylix
-
-          # catppuccin.nixosModules.catppuccin
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -53,7 +56,6 @@
 	        nixvim.homeModules.nixvim
           catppuccin.homeModules.catppuccin
                     stylix.homeModules.stylix
-
         ];
       };
        homeConfigurations.root = home-manager.lib.homeManagerConfiguration {
