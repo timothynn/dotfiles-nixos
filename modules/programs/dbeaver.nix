@@ -1,30 +1,42 @@
-{ pkgs, ... }:
+# In your home.nix
+{ pkgs, config, lib, ... }:
 
 let
-  dbeaverEE = pkgs.stdenv.mkDerivation rec {
-    pname = "dbeaver-enterprise";
-    version = "latest"; # adjust to latest release tag
+  dbeaver-EE = pkgs.stdenv.mkDerivation {
+    pname = "dbeaver-ee";
+    version = "latest"; # Replace with actual version
 
     src = pkgs.fetchurl {
-      url = "https://dbeaver.com/files/dbeaver-ee-${version}-linux.gtk.x86_64.tar.gz";
-      sha256 = "sha256:141dca35564f197114b5a9478c48d7b9524920dd1973b71a6d296145eff53651"; # replace with real hash
+      url =
+        "https://dbeaver.com/files/dbeaver-ee-latest-linux.gtk.x86_64.tar.gz";
+      sha256 = "sha256-orsFYutnaJ9uQOHqh7p4jmjnhuHgc4uSeQTVQ1lKqrw="; # You'll need to calculate this
     };
 
-    nativeBuildInputs = [ pkgs.makeWrapper pkgs.unzip ];
-    buildInputs = [ pkgs.zlib pkgs.glib pkgs.gtk3 pkgs.gtk2 pkgs.jdk ];
-
     installPhase = ''
-      mkdir -p $out/opt/dbeaver
-      tar -xzf $src --strip-components=1 -C $out/opt/dbeaver
-
-      # Symlink the executable into bin
+      mkdir -p $out
+      cp -r * $out/
       mkdir -p $out/bin
-      ln -s $out/opt/dbeaver/dbeaver $out/bin/dbeaver
+      ln -s $out/dbeaver $out/bin/dbeaver-ee
     '';
+
+    meta = with lib; {
+      description = "DBeaver Enterprise Edition";
+      platforms = [ "x86_64-linux" ];
+    };
   };
-in
-{
-  home.packages = [
-    dbeaverEE
-  ];
+in {
+  home.packages = with pkgs;
+    [
+        dbeaver-EE
+    ];
+
+  xdg.desktopEntries.dbeaver-ee = {
+    name = "DBeaver Enterprise";
+    comment = "Database management tool";
+    exec = "dbeaver-ee";
+    icon = "dbeaver";
+    categories = [ "Development" "Database" ];
+    mimeType = [ "application/sql" ];
+  };
+
 }

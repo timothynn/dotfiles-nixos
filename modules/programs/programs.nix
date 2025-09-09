@@ -7,6 +7,7 @@
     ./eza.nix
     ./fzf.nix
     ./git.nix
+    ./gh.nix
     ./hyprlock.nix
     ./kitty.nix
     ./mailspring.nix
@@ -15,7 +16,7 @@
     ./rbw.nix
     ./rofi.nix
     ./starship.nix
-    ./thunar.nix
+    # ./thunar.nix
     # ./waybar/waybar.nix
 		./waybar.nix
     ./zellij.nix
@@ -25,7 +26,6 @@
     ./skim.nix
     ./cava.nix
 		./feh.nix
-		./dbeaver.nix
+		# ./dbeaver.nix
 	];
-
 }

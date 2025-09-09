@@ -74,13 +74,29 @@
         };
 
         # --- Battery ---
-        battery = {
-          format = "{capacity}% {icon}";
-          format-icons = ["" "" "" "" ""];
-          tooltip-format = "Capacity: {capacity}%\nStatus: {status}";
-          on-click = "notify-send 'Battery profile' 'Switching performance modes: eco, balanced, performance'";
-        };
+        # battery = {
+        #   format = "{capacity}% {icon}";
+        #   format-icons = ["" "" "" "" ""];
+        #   tooltip-format = "Capacity: {capacity}%\nStatus: {status}";
+        #   on-click = "notify-send 'Battery profile' 'Switching performance modes: eco, balanced, performance'";
+        # };
+battery = {
+          format = "{icon} {capacity}%";
+          format-icons = [
+    "" # 0-20%
+    "" # 20-40%
+    "" # 40-60%
+    "" # 60-80%
+    "" # 80-100%
+  ];
+          format-charging = " {capacity}%";   # bolt icon
 
+  # Show plugged in but not charging (like full battery)
+  format-plugged = " {capacity}%";   # plug icon
+
+          on-click = "notify-send 'Battery profile' 'Switching performance modes: eco, balanced, performance'";
+          tooltip = false;
+          };
         # --- Network ---
         network = {
           format-wifi = " {essid} ({signalStrength}%)";
@@ -106,8 +122,8 @@
 
     style = ''
       * {
-        font-family: JetBrainsMono Nerd Font, monospace;
-        font-size: 13px;
+        font-family: JetBrainsMono Nerd Font;
+        font-size: 12px;
       }
       window#waybar {
         background: #1e1e2e;

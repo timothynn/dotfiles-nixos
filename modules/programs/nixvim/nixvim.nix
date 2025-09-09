@@ -27,11 +27,7 @@
       settings = { flavour = "mocha"; };
     };
     extraPlugins = with pkgs; [
-      # vimPlugins.noice-nvim
       vimPlugins.nui-nvim
-      # vimPlugins.dressing-nvim
-      # vimPlugins.nvim-notify
-      # vimPlugins.iron-nvim
       (vimUtils.buildVimPlugin {
         pname = "venv-selector-nvim";
         version = "unstable";
@@ -138,26 +134,26 @@
         };
       };
 
-      conform-nvim = {
-        enable = true;
-
-        # Configure formatters per language
-        settings = {
-          formatters_by_ft = {
-            python = [ "black" "isort" ];
-            nix = [ "nixpkgs-fmt" ];
-            lua = [ "stylua" ];
-            javascript = [ "prettier" ];
-            typescript = [ "prettier" ];
-          };
-
-          # Run formatters on save
-          format_on_save = {
-            lspFallback = true;
-            timeoutMs = 500;
-          };
-        };
-      };
+      # conform-nvim = {
+      #   enable = true;
+      #
+      #   # Configure formatters per language
+      #   settings = {
+      #     formatters_by_ft = {
+      #       python = [ "black" "isort" ];
+      #       nix = [ "nixpkgs-fmt" ];
+      #       lua = [ "stylua" ];
+      #       javascript = [ "prettier" ];
+      #       typescript = [ "prettier" ];
+      #     };
+      #
+      #     # Run formatters on save
+      #     format_on_save = {
+      #       lspFallback = true;
+      #       timeoutMs = 500;
+      #     };
+      #   };
+      # };
 
       none-ls = {
         enable = true;
@@ -186,21 +182,6 @@
       # Snippets (for completion)
       luasnip.enable = true;
 
-      # nvim-tree
-      nvim-tree = {
-        enable = true;
-        settings = {
-          view = {
-            width = 30;
-            side = "left";
-          };
-          renderer = { group_empty = true; };
-          filters = { dotfiles = false; };
-        };
-      };
-
-      chadtree = { enable = true; };
-
       # Toggle term
       toggleterm = {
         enable = true;
@@ -212,56 +193,56 @@
       };
 
       # Dashboard
-      alpha = {
-        enable = true;
-        theme = "dashboard"; # other options: "startify", "theta"
-      };
+      # alpha = {
+      #   enable = true;
+      #   theme = "dashboard"; # other options: "startify", "theta"
+      # };
 
-      gitsigns.enable = true; # git hunk signs & inline blame
-      trouble.enable = true; # diagnostics/quickfix UI
+      # gitsigns.enable = true; # git hunk signs & inline blame
+      # trouble.enable = true; # diagnostics/quickfix UI
       # symbols-outline.enable = true; # sidebar symbol tree
-      nvim-autopairs.enable = true; # auto-close brackets/quotes
-      hop.enable = true; # fast cursor jumps
-      dap.enable = true; # debugging core
-      dap-ui.enable = true; # debugging UI
+      # nvim-autopairs.enable = true; # auto-close brackets/quotes
+      # hop.enable = true; # fast cursor jumps
+      # dap.enable = true; # debugging core
+      # dap-ui.enable = true; # debugging UI
       dressing.enable = true;
       notify.enable = true;
 
-      iron = {
-        enable = true;
+      # iron = {
+      #   enable = true;
+      #
+      #   settings = {
+      #     repl_open_cmd = "vertical botright 80 split";
+      #     scratch_repl = true;
+      #
+      #     repl_definition = {
+      #       python = { command = [ "python3" ]; };
+      #       nix = { command = [ "nix" "repl" ]; };
+      #     };
+      #   };
+      # };
 
-        settings = {
-          repl_open_cmd = "vertical botright 80 split";
-          scratch_repl = true;
-
-          repl_definition = {
-            python = { command = [ "python3" ]; };
-            nix = { command = [ "nix" "repl" ]; };
-          };
-        };
-      };
-
-      noice = {
-        enable = true;
-        settings = {
-          lsp.progress.enabled = true;
-          presets = {
-            bottom_search = true;
-            command_palette = true;
-          };
-        };
-      };
-
-      # Markdown preview
-      markdown-preview = {
-        enable = true;
-        settings = {
-          auto_start = 0; # don’t auto preview on file open
-          auto_close = 1; # close preview when buffer closes
-          refresh_slow = 0; # live update as you type
-          browser = "firefox"; # or "chromium", "brave", etc.
-        };
-      };
+      # noice = {
+      #   enable = true;
+      #   settings = {
+      #     lsp.progress.enabled = true;
+      #     presets = {
+      #       bottom_search = true;
+      #       command_palette = true;
+      #     };
+      #   };
+      # };
+      #
+      # # Markdown preview
+      # markdown-preview = {
+      #   enable = true;
+      #   settings = {
+      #     auto_start = 0; # don’t auto preview on file open
+      #     auto_close = 1; # close preview when buffer closes
+      #     refresh_slow = 0; # live update as you type
+      #     browser = "firefox"; # or "chromium", "brave", etc.
+      #   };
+      # };
 
     };
 
@@ -270,37 +251,6 @@
         auto_refresh = true,
         name = ".venv",
       })
-
-      if vim.tbl_islist == nil then
-        vim.tbl_islist = vim.islist
-      end
-
-      local alpha = require("alpha")
-      local dashboard = require("alpha.themes.dashboard")
-
-      dashboard.section.header.val = {
-        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡤⣤⣤⡀   ",
-        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠋⠁⠀⠘⢿⣆ ",
-        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⡟⠁⠀⠀⠀⠀⠀⠀⠙⣧",
-        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⡀⠀⠀⠀⣿⠁⠀⠀⣠⣶⣶⣦⡀⠀⠀⣿",
-        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡏⠀⠀⠉⠙⢿⣦⠀⣿⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⣿",
-        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣇⠀⠀⠀⠀⣸⡿⠀⢿⡀⠀⠀⠈⠛⠛⠉⠀⠀⢀⡿",
-        "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣷⣄⣀⣠⡿⠁⠀⠀⠙⠶⣤⣄⣀⣀⣠⣴⡶⠋",
-      }
-
-      dashboard.section.buttons.val = {
-        dashboard.button("e", "  New File", ":ene <CR>"),
-        dashboard.button("f", "  Find File", ":Telescope find_files<CR>"),
-        dashboard.button("r", "  Recent Files", ":Telescope oldfiles<CR>"),
-        dashboard.button("t", "  Terminal", ":ToggleTerm<CR>"),
-        dashboard.button("q", "  Quit", ":qa<CR>"),
-      }
-
-      dashboard.section.footer.val = { "⚡ Happy hacking ⚡" }
-
-      alpha.setup(dashboard.config)
-
-
     '';
 
     # Auto-format on save
@@ -372,19 +322,19 @@
         options.desc = "Quit";
       }
 
-      # nvim-tree
-      {
-        mode = "n";
-        key = "<leader>e";
-        action = "<cmd>NvimTreeToggle<CR>";
-        options.desc = "Toggle file explorer";
-      }
-      {
-        mode = "n";
-        key = "<leader>f";
-        action = "<cmd>NvimTreeFindFile<CR>";
-        options.desc = "Focus current file in explorer";
-      }
+      # # nvim-tree
+      # {
+      #   mode = "n";
+      #   key = "<leader>e";
+      #   action = "<cmd>NvimTreeToggle<CR>";
+      #   options.desc = "Toggle file explorer";
+      # }
+      # {
+      #   mode = "n";
+      #   key = "<leader>f";
+      #   action = "<cmd>NvimTreeFindFile<CR>";
+      #   options.desc = "Focus current file in explorer";
+      # }
 
       # PYTHON STUFF
       {
@@ -428,36 +378,36 @@
 
       # REPL
       # Open REPL
-      {
-        mode = "n";
-        key = "<leader>rr";
-        action = "<cmd>IronRepl<CR>";
-        options.desc = "Open REPL";
-      }
-
+      # {
+      #   mode = "n";
+      #   key = "<leader>rr";
+      #   action = "<cmd>IronRepl<CR>";
+      #   options.desc = "Open REPL";
+      # }
+      #
       # Send line
-      {
-        mode = "n";
-        key = "<leader>rl";
-        action = "<cmd>IronSend<CR>";
-        options.desc = "Send line to REPL";
-      }
+      # {
+      #   mode = "n";
+      #   key = "<leader>rl";
+      #   action = "<cmd>IronSend<CR>";
+      #   options.desc = "Send line to REPL";
+      # }
 
       # Send visual selection
-      {
-        mode = "v";
-        key = "<leader>rs";
-        action = ":IronVisualSend<CR>";
-        options.desc = "Send selection to REPL";
-      }
-
-      # Send whole file
-      {
-        mode = "n";
-        key = "<leader>rf";
-        action = "ggVG:<C-u>IronVisualSend<CR>";
-        options.desc = "Send file to REPL";
-      }
+      # {
+      #   mode = "v";
+      #   key = "<leader>rs";
+      #   action = ":IronVisualSend<CR>";
+      #   options.desc = "Send selection to REPL";
+      # }
+      #
+      # # Send whole file
+      # {
+      #   mode = "n";
+      #   key = "<leader>rf";
+      #   action = "ggVG:<C-u>IronVisualSend<CR>";
+      #   options.desc = "Send file to REPL";
+      # }
       # # Hover / Signature help
       # { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<CR>"; options.desc = "LSP Hover"; }
       # { mode = "n"; key = "<leader>sh"; action = "<cmd>lua vim.lsp.buf.signature_help()<CR>"; options.desc = "LSP Signature Help"; }
@@ -473,26 +423,26 @@
       # { mode = "n"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; options.desc = "LSP Code Action"; }
 
       # Toggle term
-      {
-        mode = "n"; # normal mode
-        key = "<A-i>"; # Alt+i
-        action = "<cmd>ToggleTerm<CR>";
-        options.desc = "Toggle floating terminal";
-      }
-      {
-        mode = "t"; # terminal mode
-        key = "<Esc>"; # exit to normal mode
-        action = "<C-\\><C-n>";
-        options.desc = "Exit terminal mode";
-      }
+      # {
+      #   mode = "n"; # normal mode
+      #   key = "<A-i>"; # Alt+i
+      #   action = "<cmd>ToggleTerm<CR>";
+      #   options.desc = "Toggle floating terminal";
+      # }
+      # {
+      #   mode = "t"; # terminal mode
+      #   key = "<Esc>"; # exit to normal mode
+      #   action = "<C-\\><C-n>";
+      #   options.desc = "Exit terminal mode";
+      # }
 
       # trouble
-      {
-        mode = "n";
-        key = "<leader>xx";
-        action = "<cmd>TroubleToggle<CR>";
-        options.desc = "Toggle Trouble";
-      }
+      # {
+      #   mode = "n";
+      #   key = "<leader>xx";
+      #   action = "<cmd>TroubleToggle<CR>";
+      #   options.desc = "Toggle Trouble";
+      # }
 
       # symbols outline
       # {
@@ -503,99 +453,99 @@
       # }
 
       # gitsigns
-      {
-        mode = "n";
-        key = "]c";
-        action = "<cmd>Gitsigns next_hunk<CR>";
-        options.desc = "Next Git hunk";
-      }
-      {
-        mode = "n";
-        key = "[c";
-        action = "<cmd>Gitsigns prev_hunk<CR>";
-        options.desc = "Prev Git hunk";
-      }
-      {
-        mode = "n";
-        key = "<leader>gp";
-        action = "<cmd>Gitsigns preview_hunk<CR>";
-        options.desc = "Preview hunk";
-      }
-      {
-        mode = "n";
-        key = "<leader>gb";
-        action = "<cmd>Gitsigns blame_line<CR>";
-        options.desc = "Git blame";
-      }
+      # {
+      #   mode = "n";
+      #   key = "]c";
+      #   action = "<cmd>Gitsigns next_hunk<CR>";
+      #   options.desc = "Next Git hunk";
+      # }
+      # {
+      #   mode = "n";
+      #   key = "[c";
+      #   action = "<cmd>Gitsigns prev_hunk<CR>";
+      #   options.desc = "Prev Git hunk";
+      # }
+      # {
+      #   mode = "n";
+      #   key = "<leader>gp";
+      #   action = "<cmd>Gitsigns preview_hunk<CR>";
+      #   options.desc = "Preview hunk";
+      # }
+      # {
+      #   mode = "n";
+      #   key = "<leader>gb";
+      #   action = "<cmd>Gitsigns blame_line<CR>";
+      #   options.desc = "Git blame";
+      # }
 
       # dap
-      {
-        mode = "n";
-        key = "<F5>";
-        action = "<cmd>lua require'dap'.continue()<CR>";
-        options.desc = "DAP Continue";
-      }
-      {
-        mode = "n";
-        key = "<F10>";
-        action = "<cmd>lua require'dap'.step_over()<CR>";
-        options.desc = "DAP Step Over";
-      }
-      {
-        mode = "n";
-        key = "<F11>";
-        action = "<cmd>lua require'dap'.step_into()<CR>";
-        options.desc = "DAP Step Into";
-      }
-      {
-        mode = "n";
-        key = "<F12>";
-        action = "<cmd>lua require'dap'.step_out()<CR>";
-        options.desc = "DAP Step Out";
-      }
-      {
-        mode = "n";
-        key = "<leader>b";
-        action = "<cmd>lua require'dap'.toggle_breakpoint()<CR>";
-        options.desc = "DAP Breakpoint";
-      }
-      {
-        mode = "n";
-        key = "<leader>dr";
-        action = "<cmd>lua require'dap'.repl.open()<CR>";
-        options.desc = "DAP REPL";
-      }
-
-      # iron.nvim (REPL)
-      {
-        mode = "n";
-        key = "<leader>sl";
-        action = "<cmd>IronRepl<CR>";
-        options.desc = "Open REPL";
-      }
-      {
-        mode = "n";
-        key = "<leader>sc";
-        action = "<cmd>IronSend<CR>";
-        options.desc = "Send to REPL";
-      }
-
-      # conform-nvim
-      {
-        mode = "n";
-        key = "<leader>cf";
-        action = "<cmd>ConformFormat<CR>";
-        options.desc = "Format current buffer";
-      }
-
-      # Markdown preview
-      {
-        mode = "n";
-        key = "<leader>mp"; # markdown preview
-        action = "<cmd>MarkdownPreviewToggle<CR>";
-        options.desc = "Toggle Markdown Preview";
-      }
-
+      # {
+      #   mode = "n";
+      #   key = "<F5>";
+      #   action = "<cmd>lua require'dap'.continue()<CR>";
+      #   options.desc = "DAP Continue";
+      # }
+      # {
+      #   mode = "n";
+      #   key = "<F10>";
+      #   action = "<cmd>lua require'dap'.step_over()<CR>";
+      #   options.desc = "DAP Step Over";
+      # }
+      # {
+      #   mode = "n";
+      #   key = "<F11>";
+      #   action = "<cmd>lua require'dap'.step_into()<CR>";
+      #   options.desc = "DAP Step Into";
+      # }
+      # {
+      #   mode = "n";
+      #   key = "<F12>";
+      #   action = "<cmd>lua require'dap'.step_out()<CR>";
+      #   options.desc = "DAP Step Out";
+      # }
+      # {
+      #   mode = "n";
+      #   key = "<leader>b";
+      #   action = "<cmd>lua require'dap'.toggle_breakpoint()<CR>";
+      #   options.desc = "DAP Breakpoint";
+      # }
+      # {
+      #   mode = "n";
+      #   key = "<leader>dr";
+      #   action = "<cmd>lua require'dap'.repl.open()<CR>";
+      #   options.desc = "DAP REPL";
+      # }
+      #
+      # # iron.nvim (REPL)
+      # {
+      #   mode = "n";
+      #   key = "<leader>sl";
+      #   action = "<cmd>IronRepl<CR>";
+      #   options.desc = "Open REPL";
+      # }
+      # {
+      #   mode = "n";
+      #   key = "<leader>sc";
+      #   action = "<cmd>IronSend<CR>";
+      #   options.desc = "Send to REPL";
+      # }
+      #
+      # # conform-nvim
+      # {
+      #   mode = "n";
+      #   key = "<leader>cf";
+      #   action = "<cmd>ConformFormat<CR>";
+      #   options.desc = "Format current buffer";
+      # }
+      #
+      # # Markdown preview
+      # {
+      #   mode = "n";
+      #   key = "<leader>mp"; # markdown preview
+      #   action = "<cmd>MarkdownPreviewToggle<CR>";
+      #   options.desc = "Toggle Markdown Preview";
+      # }
+      #
     ];
   };
 }

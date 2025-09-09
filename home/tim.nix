@@ -44,15 +44,15 @@
 
     fonts = {
       monospace = {
-        package = pkgs.fantasque-sans-mono;
-        name = "FantasqueSansM Nerd Font";
+        package = pkgs.jetbrains-mono;
+        name = "JetbrainsMono Nerd Font";
 
       };
       sizes = {
         applications = 11;
         desktop = 11;
         popups = 11;
-        terminal = 11;
+        terminal = 10;
       };
       serif = config.stylix.fonts.monospace;
       sansSerif = config.stylix.fonts.monospace;
@@ -75,11 +75,11 @@
     ffmpeg
     bat
     bottom
-    gh
-    git
+    # gh
+    # git
     postman
     discord
-    dbeaver-bin
+    #dbeaver-bin
     vscode
     fd
     ripgrep
@@ -92,7 +92,7 @@
     clang
     unzip
     mpv
-    lazygit
+    # lazygit
     kdePackages.dolphin
     qbittorrent
     zoxide
@@ -126,7 +126,6 @@
 
     termusic
     yt-dlp
-    pcmanfm
     mastodon
 
     #markdown
@@ -150,6 +149,10 @@
 
     direnv
     wlogout
+    pamixer
+
+    grafana
+    dbgate
   ];
 
   xdg.mimeApps = {
@@ -163,12 +166,17 @@
   fonts.fontconfig.enable = true;
 
   home.sessionVariables = {
-    GTK_FONT_NAME = "JetbrainsMono Nerd Font 11";
-    QT_FONT_NAME = "JetbrainsMono Nerd Font 11";
-    GTK_THEME = "Obsidian-Green";
-    QT_STYLE_OVERRIDE = "kvantum";
+    # GTK_FONT_NAME = "JetbrainsMono Nerd Font 11";
+    # QT_FONT_NAME = "JetbrainsMono Nerd Font 11";
+    # GTK_THEME = "Obsidian-Green";
+    # QT_STYLE_OVERRIDE = "kvantum";
     BROWSER = "firefox";
     EDITOR = "nvim";
+    NIXOS_OZONE_WL = "1";  # tells Electron to use Wayland
+    # ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+    ELECTRON_ENABLE_WAYLAND = "1";
+    # GTK_IM_MODULE = "wayland";
+    QT_QPA_PLATFORM = "wayland";
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -198,5 +206,6 @@
   programs = {
     home-manager.enable = true;
     lazydocker.enable = true;
+    lazygit.enable = true;
   };
 }

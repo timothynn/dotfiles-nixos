@@ -7,8 +7,18 @@
 {
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    grub = {
+        enable = true;
+        efiSupport = true;
+        gfxmodeBios = "auto";
+        device = "nodev";
+        
+        # theme = ./grub-themes/catppuccin/ 
+        theme = "${pkgs.catppuccin-grub}";
+    };
+    efi.canTouchEfiVariables = true;
+  };
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -74,7 +84,6 @@
       "video"
       "storage"
       "docker"
-      "postgres"
     ];
     packages = with pkgs; [ ];
     ignoreShellProgramCheck = true;
@@ -104,7 +113,11 @@
       # background = "${./wallpaper.png}";
       loginBackground = true;
     })
+    (catppuccin-grub.override {
+      flavor = "mocha";
+    })
     pgcli
+    libgnome-keyring
   ];
 
   virtualisation.docker = {
@@ -189,27 +202,32 @@
         		});
       	'';
   };
+  
+
   # FLATPAK
   services.flatpak = { enable = true; };
 
   services = {
+    dbus.enable = true;
     postgresql = { 
     	enable = true; 
-	ensureUsers = [
-		{
-			name = "tim";
-		}
-		{
-			name = "postgres";
-		}
-	];
-	enableTCPIP = true;
-	ensureDatabases = [ "tim"  "postgres" ];
-	initialScript = pkgs.writeText "init-sql-script" ''
-  		alter user tim with password 'shrek';
-	'';
-
+        package = pkgs.postgresql_16;
+        ensureDatabases = [ "mydb" "tim" ];
+        ensureUsers = [
+            {
+                name = "tim";
+                ensureDBOwnership = true;
+                ensureClauses = {
+                    superuser = true;
+                    createrole = true;
+                    createdb = true;
+                };    
+            }
+        ];
+        initialScript = pkgs.writeText "init-sql-script" ''
+            alter user postgres with password 'postgres';
+            alter user tim with password 'shrerk';
+        '';
     };
-    postgrest = { enable = true; };
   };
 }
