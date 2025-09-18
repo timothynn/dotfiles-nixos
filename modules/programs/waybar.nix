@@ -7,7 +7,7 @@
       mainBar = {
         layer = "top";
         position = "top";
-        height = 28;
+        height = 26;
         spacing = 6;
 
         modules-left  = [ "hyprland/workspaces" ];
@@ -121,17 +121,9 @@ battery = {
     };
 
     style = ''
-      * {
-        font-family: JetBrainsMono Nerd Font;
-        font-size: 12px;
-      }
-      window#waybar {
-        background: #1e1e2e;
-        color: #cdd6f4;
-      }
       #clock, #cpu, #custom-gpu, #pulseaudio, #custom-mic,
       #backlight, #battery, #network, #tray, #custom-power {
-        padding: 0 10px;
+        padding: 0 6px;
       }
     '';
   };

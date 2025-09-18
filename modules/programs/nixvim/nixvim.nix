@@ -35,7 +35,7 @@
           owner = "linux-cultist";
           repo = "venv-selector.nvim";
           rev = "main"; # or lock to a commit hash
-          sha256 = "sha256-6bCageV2Wqm8j+pNZnyDcSzf5SH9frjOLweixvaz3dI=";
+          sha256 = "sha256-SUdGG9t9hfAxZW2upFPaYMfDAbU1BK70y3WSuQRhNYs=";
         };
       })
 
