@@ -32,14 +32,16 @@
             ./hardware-configuration.nix
             home-manager.nixosModules.home-manager
             {
-                home.manager = {
+                home-manager = {
                     users.tim = {
+                        home.stateVersion = "25.05";
                         modules = [
                             ./home.nix
                             stylix.homeModules.stylix
                             nixvim.homeModules.nixvim
                         ];
                     };
+                    useUserPackages = true;
                 };
             }
         ];
