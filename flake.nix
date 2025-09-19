@@ -35,7 +35,7 @@
                 home-manager = {
                     users.tim = {
                         home.stateVersion = "25.05";
-                        modules = [
+                        imports = [
                             ./home.nix
                             stylix.homeModules.stylix
                             nixvim.homeModules.nixvim
